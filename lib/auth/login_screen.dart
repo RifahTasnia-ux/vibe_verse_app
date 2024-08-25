@@ -7,6 +7,7 @@ import '../../utils/app_colors.dart';
 import '../../utils/dialog.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/custom_text_field.dart';
+import '../data/firebase_auth.dart';
 
 
 class LoginScreen extends StatefulWidget {
