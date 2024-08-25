@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vibe_verse/utils/app_colors.dart';
 import 'package:vibe_verse/utils/dialog.dart';
+import '../../../data/firebase_auth.dart';
 import '../../../utils/image_picker.dart';
 import '../../../widget/custom_button.dart';
 import '../../../widget/custom_text_field.dart';
@@ -90,6 +91,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
 
     try {
+      await Authentication().signUp(
+        email: emailTEC.text,
+        password: passwordTEC.text,
+        confirmPassword: confirmPasswordTEC.text,
+        userName: userNameTEC.text,
+        bio: bioTEC.text,
+        profile: _imageFile ?? File(''),
+      );
 
       if (mounted) {
         Navigator.pushReplacement(
