@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:vibe_verse/data/firebase_auth.dart';
-import 'package:vibe_verse/presentation/screens/auth/landing_screen.dart';
+
+import '../auth/splash_screen.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
                 await Authentication().signOutUser();
                 PersistentNavBarNavigator.pushNewScreen(
                   context,
-                  screen: const LandingScreen(),
+                  screen: const SplashScreen(),
                   withNavBar: false,
                   pageTransitionAnimation: PageTransitionAnimation.cupertino,
                 );
