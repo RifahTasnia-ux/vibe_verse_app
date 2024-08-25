@@ -6,6 +6,8 @@ import 'package:vibe_verse/utils/app_colors.dart';
 import '../../widget/custom_button.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
+import 'login_screen.dart';
+
 
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
@@ -68,7 +70,7 @@ class LandingScreen extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
+                      builder: (context) => const LoginScreen(),
                     ),
                   );
                 },
