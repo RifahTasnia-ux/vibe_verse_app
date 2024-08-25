@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vibe_verse/presentation/screens/home_screen/home_screen.dart';
-import '../../utils/app_colors.dart';
-import '../../utils/dialog.dart';
-import '../../widget/custom_button.dart';
-import '../../widget/custom_text_field.dart';
-import '../data/firebase_auth.dart';
+
+import '../../../data/firebase_auth.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/dialog.dart';
+import '../../../widget/custom_button.dart';
+import '../../../widget/custom_text_field.dart';
+
+
 
 
 class LoginScreen extends StatefulWidget {
