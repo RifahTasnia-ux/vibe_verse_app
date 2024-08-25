@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vibe_verse/presentation/screens/home_screen/home_screen.dart';
 
+
 class VibeVerseApp extends StatelessWidget {
   const VibeVerseApp({super.key});
 
@@ -15,7 +16,7 @@ class VibeVerseApp extends StatelessWidget {
         return const MaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Vibe Verse",
-          // theme: AppTheme.lightTheme,
+          //theme: AppTheme.lightTheme,
           // home: const SplashScreen(),
           home: HomeScreen(),
         );
