@@ -65,3 +65,7 @@ flutter:
         - asset: assets/fonts/Roboto/Roboto-Thin.ttf
         - asset: assets/fonts/Roboto/Roboto-Italic.ttf
         - asset: assets/fonts/Roboto/Roboto-Medium.ttf
+
+    - family: Gang
+      fonts:
+        - asset: assets/fonts/Gang_Three.ttf

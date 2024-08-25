@@ -26,20 +26,16 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: ScreenUtil.defaultSize.height * .08.h,
-      width: double.infinity,
+      width: 395.w,
+      height: 36.h,
       child: ElevatedButton(
         onPressed: isEnabled && !isLoading ? onPressed : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: isLoading
               ? loadingColor
-              : (isEnabled ? color : disabledColor), // Use disabledColor if not enabled
+              : (isEnabled ? color : disabledColor),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius.r),
-          ),
-          padding: EdgeInsets.symmetric(
-            vertical: 16.h,
-            horizontal: 32.w,
           ),
         ),
         child: isLoading
