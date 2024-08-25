@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vibe_verse/presentation/screens/home_screen/home_screen.dart';
 import 'package:vibe_verse/utils/app_colors.dart';
-import '../../widget/custom_button.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../../widget/custom_button.dart';
 import 'login_screen.dart';
 
 

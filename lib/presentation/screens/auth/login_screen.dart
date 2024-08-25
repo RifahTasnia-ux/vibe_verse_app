@@ -1,14 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vibe_verse/presentation/screens/home_screen/home_screen.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:vibe_verse/utils/svg_string.dart';
-import '../../utils/app_colors.dart';
-import '../../utils/dialog.dart';
-import '../../widget/custom_button.dart';
-import '../../widget/custom_text_field.dart';
-import '../data/firebase_auth.dart';
+
+import '../../../data/firebase_auth.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/dialog.dart';
+import '../../../widget/custom_button.dart';
+import '../../../widget/custom_text_field.dart';
+
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,8 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   bool _isEmailFilled = false;
   bool _isPasswordFilled = false;
-
-  bool _isChecked = false;
 
   @override
   void initState() {
@@ -64,8 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      await Authentication()
-          .login(email: emailTEC.text, password: passwordTEC.text);
+      await Authentication().login(email: emailTEC.text, password: passwordTEC.text);
       if (mounted) {
         Navigator.pushReplacement(
           context,
@@ -102,36 +102,19 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: ScreenUtil.defaultSize.height * .15.h),
-              const Text(
+              Text(
                 'Vibe Verse',
-                style: TextStyle(
-                  fontSize: 40,
+                style: GoogleFonts.lobster(
+                  textStyle: textTheme.displayLarge,
+                  fontSize: 48,
                   fontWeight: FontWeight.w700,
                   fontStyle: FontStyle.italic,
-                  fontFamily: "Gang",
-                  color: Colors.black87
                 ),
               ),
-              SizedBox(height: 40.h),
-              const Text(
-                "Login to your Account",
-                style: TextStyle(
-                  fontSize: 22,
-                  fontFamily: "Roboto-Bold",
-                ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
+              SizedBox(height: 60.h),
               CustomTextField(
                 controller: emailTEC,
-                svgIcon: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SvgPicture.string(
-                      SvgStringName.svgEmail,
-                      height: 20,
-                      width: 20,
-                    )),
+                icon: Icons.email,
                 hintText: 'Email',
                 focusNode: emailFocus,
                 inputType: TextInputType.emailAddress,
@@ -139,44 +122,19 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 16.h),
               CustomTextField(
                 controller: passwordTEC,
-                svgIcon: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SvgPicture.string(
-                      SvgStringName.svgPassword,
-                      height: 20,
-                      width: 20,
-                    )),
+                icon: Icons.lock,
                 hintText: 'Password',
                 focusNode: passwordFocus,
                 isPassword: true,
                 inputType: TextInputType.visiblePassword,
               ),
-              CheckboxListTile(
-                title: Text(
-                  "Save password",
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                  ),
-                ),
-                value: _isChecked,
-                onChanged: (bool? newValue) {
-                  setState(() {
-                    _isChecked = newValue!;
-                  });
-                },
-                controlAffinity: ListTileControlAffinity
-                    .leading,
-                contentPadding: EdgeInsets.zero,
-                activeColor: _isChecked ? const Color(0xff779aef) : Colors.grey[700], // Change color based on the state
-                checkColor: Colors.white, // Optional: change the checkmark color
-              ),
-              SizedBox(height: 15.h),
+              SizedBox(height: 48.h),
               CustomButton(
-                text: 'Log In',
+                text: 'Login In',
                 onPressed: _handleLogin,
                 isEnabled: _isEmailFilled && _isPasswordFilled,
                 isLoading: _isLoading,
-                color: AppColors.textBoxButton,
+                disabledColor: AppColors.paleBlue,
                 loadingColor: AppColors.secondary,
               ),
               const Spacer(),
@@ -184,19 +142,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: RichText(
                   text: TextSpan(
                     text: " Don't have an Account? ",
-                    style:
-                        textTheme.bodySmall?.copyWith(color: AppColors.black),
+                    style: textTheme.bodySmall?.copyWith(color: AppColors.black),
                     children: [
                       TextSpan(
                         text: "Sign Up",
-                        style: textTheme.bodySmall
-                            ?.copyWith(color: AppColors.secondary),
+                        style: textTheme.bodySmall?.copyWith(color: AppColors.secondary),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()),
+                              MaterialPageRoute(builder: (context) => const HomeScreen()),
                             );
                           },
                       ),
@@ -211,3 +166,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+
+

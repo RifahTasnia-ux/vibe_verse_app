@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:vibe_verse/auth/login_screen.dart';
+import 'package:vibe_verse/presentation/screens/auth/splash_screen.dart';
+
+
 
 
 class VibeVerseApp extends StatelessWidget {
@@ -17,8 +19,7 @@ class VibeVerseApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: "Vibe Verse",
           //theme: AppTheme.lightTheme,
-          // home: const SplashScreen(),
-          home: LoginScreen(),
+          home: const SplashScreen(),
         );
       },
     );
