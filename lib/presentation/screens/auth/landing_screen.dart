@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vibe_verse/presentation/screens/home_screen/home_screen.dart';
+import 'package:vibe_verse/presentation/screens/auth/registration_screen.dart';
 import 'package:vibe_verse/utils/app_colors.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -51,7 +51,7 @@ class LandingScreen extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
+                        builder: (context) => const SignUpScreen(),
                       ),
                     );
                   },
