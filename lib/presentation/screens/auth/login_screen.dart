@@ -1,7 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:vibe_verse/presentation/screens/home_screen/home_screen.dart';
+import 'package:vibe_verse/presentation/screens/auth/registration_screen.dart';
+import 'package:vibe_verse/presentation/screens/home_bottom_nav_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vibe_verse/utils/svg_string.dart';
 import '../../../data/firebase_auth.dart';
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const PersistentBottomNavBar()),
         );
         emailTEC.clear();
         passwordTEC.clear();
@@ -196,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()),
+                                  builder: (context) => const SignUpScreen()),
                             );
                           },
                       ),
