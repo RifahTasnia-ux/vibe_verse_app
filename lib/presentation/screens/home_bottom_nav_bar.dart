@@ -1,9 +1,11 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vibe_verse/presentation/screens/search_screen/search_screen.dart';
 import 'package:vibe_verse/presentation/screens/upload_post_screen/upload_post_screen.dart';
 import 'package:vibe_verse/presentation/screens/user_profile_screen/user_profile_screen.dart';
+import 'package:vibe_verse/utils/svg_string.dart';
 
 import 'home_screen/home_screen.dart';
 
@@ -35,35 +37,35 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home,
-            color: _controller.index == 0 ? Colors.blue : Colors.black),
-        title: "HOME",
-        activeColorPrimary: Colors.blue,
+        icon: SvgPicture.string(SvgIconString.svgHomeSelected,height: 24,width: 24,),
+        inactiveIcon: SvgPicture.string(SvgIconString.svgHomeIcon,height: 24,width: 24,),
+        // title: "HOME",
+        activeColorPrimary: const Color(0xff4478FF),
         inactiveColorPrimary: Colors.black,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.search,
-            color: _controller.index == 1 ? Colors.blue : Colors.black),
-        title: "Search",
-        activeColorPrimary: Colors.blue,
+        icon: SvgPicture.string(SvgIconString.svgSearchIconSelected,height: 24,width: 24,),
+        inactiveIcon: SvgPicture.string(SvgIconString.svgSearchIcon,height: 24,width: 24,),
+        // title: "Search",
+      ),
+      PersistentBottomNavBarItem(
+        icon: SvgPicture.string(SvgIconString.svgAddIconSelected,height: 24,width: 24,),
+        inactiveIcon: SvgPicture.string(SvgIconString.svgAddIcon,height: 24,width: 24,),
+        // title: "Upload",
+        activeColorPrimary: const Color(0xff4478FF),
         inactiveColorPrimary: Colors.black,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.add,
-            color: _controller.index == 2 ? Colors.blue : Colors.black),
-        title: "Upload",
-        activeColorPrimary: Colors.blue,
-        inactiveColorPrimary: Colors.black,
-      ),
-      PersistentBottomNavBarItem(
-        icon: Icon(Icons.person,
-            color: _controller.index == 3 ? Colors.blue : Colors.black),
-        title: "Profile",
-        activeColorPrimary: Colors.blue,
+        icon: SvgPicture.string(SvgIconString.svgProfileIconSelected,height: 24,width: 24,),
+        inactiveIcon: SvgPicture.string(SvgIconString.svgProfileIcon,height: 24,width: 24,),
+        // title: "Profile",
+        activeColorPrimary: const Color(0xff4478FF),
         inactiveColorPrimary: Colors.black,
       ),
     ];
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +87,9 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
         ),
         isVisible: true,
         navBarHeight: kBottomNavigationBarHeight + 10.h, // Adjusting height to prevent overflow
-        navBarStyle: NavBarStyle.style9,
-        padding: EdgeInsets.only(bottom: 8.h, top: 8.h),
-        margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h), // Adjusting margin
+        navBarStyle: NavBarStyle.style6,
+        padding: EdgeInsets.only(bottom: 8.h, top: 12.h),
+        margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h), // Adjusting margin
         animationSettings: const NavBarAnimationSettings(
           navBarItemAnimation: ItemAnimationSettings(
             duration: Duration(milliseconds: 400),
@@ -95,7 +97,7 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
           ),
           screenTransitionAnimation: ScreenTransitionAnimationSettings(
             animateTabTransition: true,
-            duration: Duration(milliseconds: 200),
+            duration: Duration(milliseconds: 400),
             screenTransitionAnimationType: ScreenTransitionAnimationType.fadeIn,
           ),
         ),
