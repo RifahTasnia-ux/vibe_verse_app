@@ -14,4 +14,8 @@ class AppColors {
   static const Color grey = Colors.grey;
   static const Color text = Color(0xFF000000);
   static const Color icon = Color(0xFF000000);
+
+  static const Color textBoxBorderBefore = Color(0xFFC8CADE);
+  static const Color textBoxBorderAfter = Color(0xFFD0D5DD);
+  static const Color textBoxButton = Color(0xFF4478FF);
 }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vibe_verse/utils/svg_string.dart';
 
 import '../utils/app_colors.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
-  final IconData icon;
+  final IconData? icon; // Optional IconData
+  final Widget? svgIcon; // Optional Widget for SVG
   final String hintText;
   final FocusNode focusNode;
   final bool isPassword;
@@ -16,7 +19,8 @@ class CustomTextField extends StatefulWidget {
   CustomTextField({
     Key? key,
     required this.controller,
-    required this.icon,
+    this.icon, // IconData is now optional
+    this.svgIcon, // Widget for SVG is also optional
     required this.hintText,
     required this.focusNode,
     this.isPassword = false,
@@ -59,22 +63,27 @@ class _CustomTextFieldState extends State<CustomTextField> {
           obscureText: widget.isPassword ? _obscureText : false,
           decoration: InputDecoration(
             hintText: widget.hintText,
-            prefixIcon: Icon(
+            prefixIcon: widget.svgIcon ?? (widget.icon != null
+                ? Icon(
               widget.icon,
               color: widget.focusNode.hasFocus
-                  ? AppColors.secondary
+                  ? AppColors.primary
                   : AppColors.grey,
               size: 24.sp,
-            ),
+            )
+                : null),
             suffixIcon: widget.isPassword
                 ? IconButton(
-              icon: Icon(
-                _obscureText
-                    ? Icons.visibility_off
-                    : Icons.visibility,
-                color: AppColors.grey,
-                size: 24.sp,
-              ),
+              // icon: Icon(
+              //   _obscureText
+              //       ? Icons.visibility_off
+              //       : Icons.visibility,
+              //   color: AppColors.grey,
+              //   size: 24.sp,
+              // ),
+              icon: SvgPicture.string(
+                  _obscureText
+                      ? SvgStringName.svgPasswordSecure : SvgStringName.svgPasswordSecureOff),
               onPressed: () {
                 setState(() {
                   _obscureText = !_obscureText;
@@ -90,11 +99,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5.r),
                 borderSide:
-                BorderSide(color: AppColors.secondary, width: 2.w)),
+                BorderSide(color: AppColors.textBoxBorderBefore, width: 2.w)),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5.r),
                 borderSide:
-                BorderSide(color: AppColors.secondary, width: 2.w)),
+                BorderSide(color: AppColors.textBoxBorderBefore, width: 2.w)),
           ),
         ),
       ),

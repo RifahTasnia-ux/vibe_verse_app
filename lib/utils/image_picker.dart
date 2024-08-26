@@ -7,7 +7,7 @@ class ImagePickerService {
   Future<File?> uploadImage(String inputSource) async {
     try {
       final XFile? pickedImage = await _picker.pickImage(
-        source: inputSource == 'camera' ? ImageSource.camera : ImageSource.gallery,
+        source: inputSource == 'camera' ? ImageSource.camera : ImageSource.camera,
       );
 
       if (pickedImage != null) {

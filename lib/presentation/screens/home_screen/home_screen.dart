@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
                   pageTransitionAnimation: PageTransitionAnimation.cupertino,
                 );
               },
-              child: const Text('HOme')),
+              child: const Text('Home')),
         ),
       ),
     );
