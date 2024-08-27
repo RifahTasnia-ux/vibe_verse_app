@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 svgIcon: Padding(
                     padding: const EdgeInsets.all(10),
                     child: SvgPicture.string(
-                      SvgIconString.svgEmail,
+                      SvgStringName.svgEmail,
                       height: 20,
                       width: 20,
                     )),
@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 svgIcon: Padding(
                     padding: const EdgeInsets.all(10),
                     child: SvgPicture.string(
-                      SvgIconString.svgPassword,
+                      SvgStringName.svgPassword,
                       height: 20,
                       width: 20,
                     )),
