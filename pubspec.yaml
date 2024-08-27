@@ -69,3 +69,7 @@ flutter:
     - family: Gang
       fonts:
         - asset: assets/fonts/Gang_Three.ttf
+
+    - family: Signika
+      fonts:
+        - asset: assets/fonts/Signika-Regular.ttf

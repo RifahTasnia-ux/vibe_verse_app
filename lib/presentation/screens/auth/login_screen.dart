@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vibe_verse/presentation/screens/auth/registration_screen.dart';
 import 'package:vibe_verse/presentation/screens/home_bottom_nav_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:vibe_verse/utils/svg_string.dart';
 import '../../../data/firebase_auth.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/dialog.dart';
+import '../../../utils/svg_string.dart';
 import '../../../widget/custom_button.dart';
 import '../../../widget/custom_text_field.dart';
 
@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 svgIcon: Padding(
                     padding: const EdgeInsets.all(10),
                     child: SvgPicture.string(
-                      SvgStringName.svgEmail,
+                      SvgIconString.svgEmail,
                       height: 20,
                       width: 20,
                     )),
@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 svgIcon: Padding(
                     padding: const EdgeInsets.all(10),
                     child: SvgPicture.string(
-                      SvgStringName.svgPassword,
+                      SvgIconString.svgPassword,
                       height: 20,
                       width: 20,
                     )),
