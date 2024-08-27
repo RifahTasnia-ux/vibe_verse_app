@@ -37,27 +37,27 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: SvgPicture.string(SvgIconString.svgHomeSelected,height: 24,width: 24,),
-        inactiveIcon: SvgPicture.string(SvgIconString.svgHomeIcon,height: 24,width: 24,),
+        icon: SvgPicture.string(SvgStringName.svgHomeSelected,height: 24,width: 24,),
+        inactiveIcon: SvgPicture.string(SvgStringName.svgHomeIcon,height: 24,width: 24,),
         // title: "HOME",
         activeColorPrimary: const Color(0xff4478FF),
         inactiveColorPrimary: Colors.black,
       ),
       PersistentBottomNavBarItem(
-        icon: SvgPicture.string(SvgIconString.svgSearchIconSelected,height: 24,width: 24,),
-        inactiveIcon: SvgPicture.string(SvgIconString.svgSearchIcon,height: 24,width: 24,),
+        icon: SvgPicture.string(SvgStringName.svgSearchIconSelected,height: 24,width: 24,),
+        inactiveIcon: SvgPicture.string(SvgStringName.svgSearchIcon,height: 24,width: 24,),
         // title: "Search",
       ),
       PersistentBottomNavBarItem(
-        icon: SvgPicture.string(SvgIconString.svgAddIconSelected,height: 24,width: 24,),
-        inactiveIcon: SvgPicture.string(SvgIconString.svgAddIcon,height: 24,width: 24,),
+        icon: SvgPicture.string(SvgStringName.svgAddIconSelected,height: 24,width: 24,),
+        inactiveIcon: SvgPicture.string(SvgStringName.svgAddIcon,height: 24,width: 24,),
         // title: "Upload",
         activeColorPrimary: const Color(0xff4478FF),
         inactiveColorPrimary: Colors.black,
       ),
       PersistentBottomNavBarItem(
-        icon: SvgPicture.string(SvgIconString.svgProfileIconSelected,height: 24,width: 24,),
-        inactiveIcon: SvgPicture.string(SvgIconString.svgProfileIcon,height: 24,width: 24,),
+        icon: SvgPicture.string(SvgStringName.svgProfileIconSelected,height: 24,width: 24,),
+        inactiveIcon: SvgPicture.string(SvgStringName.svgProfileIcon,height: 24,width: 24,),
         // title: "Profile",
         activeColorPrimary: const Color(0xff4478FF),
         inactiveColorPrimary: Colors.black,
