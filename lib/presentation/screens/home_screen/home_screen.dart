@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../widget/home_app_bar_widget.dart';
+import '../../../widget/home_story_widget.dart';
 
 
 
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           HomeAppBarWidget(),
+          HomeStoryWidget(),
         ],
       )
     );
