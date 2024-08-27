@@ -9,20 +9,20 @@ class UploadScreen extends StatefulWidget {
 }
 
 class _UploadScreenState extends State<UploadScreen> {
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
 
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Text(
-            'Upload Screen',
-            style: textTheme.titleLarge?.copyWith(color: AppColors.secondary),
+      appBar: AppBar(
+        title: const Text('New Post'),
+        ),
+        body: Center(
+            child: Text('Upload Screen',style: textTheme.titleLarge?.copyWith(color: AppColors.secondary),
           ),
         ),
-      ),
     );
   }
 }

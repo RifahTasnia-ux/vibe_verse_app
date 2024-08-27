@@ -1,4 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +8,7 @@ import 'package:vibe_verse/presentation/screens/upload_post_screen/upload_post_s
 import 'package:vibe_verse/presentation/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:vibe_verse/utils/svg_string.dart';
 
+import '../../widget/photodialogbox.dart';
 import 'home_screen/home_screen.dart';
 
 class PersistentBottomNavBar extends StatefulWidget {
@@ -18,7 +20,7 @@ class PersistentBottomNavBar extends StatefulWidget {
 
 class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
   late PersistentTabController _controller;
-
+  final ImagePicker _picker = ImagePicker();
   @override
   void initState() {
     super.initState();
@@ -54,6 +56,9 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
         // title: "Upload",
         activeColorPrimary: const Color(0xff4478FF),
         inactiveColorPrimary: Colors.black,
+        onPressed: (context) {
+          _showPhotoPickerDialog();
+        },
       ),
       PersistentBottomNavBarItem(
         icon: SvgPicture.string(SvgStringName.svgProfileIconSelected,height: 24,width: 24,),
@@ -64,9 +69,23 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
       ),
     ];
   }
-
-
-
+  void _showPhotoPickerDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return PhotoPickerDialog(
+          onImageSelected: (ImageSource source) async {
+            final pickedFile = await _picker.pickImage(source: source);
+            if (pickedFile != null) {
+              print('Image selected: ${pickedFile.path}');
+            } else {
+              print('No image selected.');
+            }
+          },
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,10 +105,15 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
           colorBehindNavBar: Colors.white,
         ),
         isVisible: true,
-        navBarHeight: kBottomNavigationBarHeight + 10.h, // Adjusting height to prevent overflow
+        navBarHeight: kBottomNavigationBarHeight + 10.h,
         navBarStyle: NavBarStyle.style6,
         padding: EdgeInsets.only(bottom: 8.h, top: 12.h),
-        margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h), // Adjusting margin
+        margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
+        onItemSelected: (index) {
+          if (index == 2) {
+            _showPhotoPickerDialog();
+          }
+        },
         animationSettings: const NavBarAnimationSettings(
           navBarItemAnimation: ItemAnimationSettings(
             duration: Duration(milliseconds: 400),
