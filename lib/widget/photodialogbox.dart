@@ -1,9 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../utils/svg_string.dart';
-
+import 'package:vibe_verse/utils/image_picker.dart';
+import '../../../utils/svg_string.dart';
+import '../presentation/screens/upload_post_screen/new_post_screen.dart';
 
 
 class PhotoPickerDialog extends StatelessWidget {
@@ -53,18 +54,32 @@ class PhotoPickerDialog extends StatelessWidget {
                   icon: SvgPicture.string(
                     SvgStringName.svgCamera,
                   ),
-                  onPressed: () {
-                    onImageSelected(ImageSource.camera);
-                    Navigator.of(context).pop();
+                  onPressed: () async {
+                    final imagePickerService = ImagePickerService();
+                    final pickedImage = await imagePickerService.uploadImage('camera');
+                    if (pickedImage != null) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => NewPostScreen(selectedImage: pickedImage),
+                        ),
+                      );
+                    }
                   },
                 ),
                 IconButton(
                   icon: SvgPicture.string(
                     SvgStringName.svgGallery,
                   ),
-                  onPressed: () {
-                    onImageSelected(ImageSource.gallery);
-                    Navigator.of(context).pop();
+                  onPressed: () async {
+                    final imagePickerService = ImagePickerService();
+                    final pickedImage = await imagePickerService.uploadImage('gallery');
+                    if (pickedImage != null) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => NewPostScreen(selectedImage: pickedImage),
+                        ),
+                      );
+                    }
                   },
                 ),
               ],
