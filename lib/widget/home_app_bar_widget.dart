@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:vibe_verse/utils/svg_string.dart';
+import 'package:vibe_verse/utils/url_path.dart';
 
 import '../data/firebase_auth.dart';
 import '../presentation/screens/auth/splash_screen.dart';
@@ -20,19 +22,35 @@ class _HomeAppBarWidgetState extends State<HomeAppBarWidget> {
   Widget build(BuildContext context) {
     return Material(
       child: AppBar(
+        backgroundColor: Colors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.transparent,
         title: GestureDetector(
           onTap: () {},
           child: Row(
             children: [
-              const CircleAvatar(
-                backgroundColor: Color(0xFFd9e0f0),
-                radius: 17.5,
-                backgroundImage:
-                    NetworkImage('https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg'),
+              SizedBox(
+                width: 35.0,
+                height: 35.0,
+                child: CachedNetworkImage(
+                  imageUrl: UrlPath.sampleProfilePicture,
+                  imageBuilder: (context, imageProvider) =>
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.4),
+                              blurRadius: 10,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                          image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover),
+                        ),
+                      ),
+                ),
               ),
               const SizedBox(
                 width: 12,
