@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -57,6 +56,7 @@ class PhotoPickerDialog extends StatelessWidget {
                   onPressed: () async {
                     final imagePickerService = ImagePickerService();
                     final pickedImage = await imagePickerService.uploadImage('camera');
+                    Navigator.of(context).pop();
                     if (pickedImage != null) {
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -73,6 +73,7 @@ class PhotoPickerDialog extends StatelessWidget {
                   onPressed: () async {
                     final imagePickerService = ImagePickerService();
                     final pickedImage = await imagePickerService.uploadImage('gallery');
+                    Navigator.of(context).pop();
                     if (pickedImage != null) {
                       Navigator.of(context).push(
                         MaterialPageRoute(

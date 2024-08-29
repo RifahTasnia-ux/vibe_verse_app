@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:vibe_verse/presentation/screens/upload_post_screen/upload_post_screen.dart';
 
 import '../../../utils/image_picker.dart';
 import '../../../utils/svg_string.dart';
@@ -17,9 +18,10 @@ class NewPostScreen extends StatefulWidget {
 class _NewPostScreenState extends State<NewPostScreen> {
   File? _pickedImage;
   final ImagePickerService _imagePickerService = ImagePickerService();
-  List<File> recentImages = []; // List to store recent images
-  List<int> selectedIndices = []; // List to manage selected state of images
-  bool _isMultipleSelect = false; // State to manage single/multiple selection
+  List<File> recentImages = [];
+  List<int> selectedIndices = [];
+  bool _isMultipleSelect = false;
+  final int maxSelection = 4;
 
   @override
   void initState() {
@@ -30,8 +32,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
 
   // Function to load recent images
   void _loadRecentImages() async {
-    // Load recent images from a directory or a database
-    // For this example, we use the selected image as the only recent image
     if (mounted) {
       setState(() {
         recentImages = [_pickedImage!]; // Add the selected image to recent images
@@ -44,7 +44,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
     if (pickedImage != null && mounted) {
       setState(() {
         recentImages.add(pickedImage as File);
-        _pickedImage = pickedImage as File; // Set picked image
+        _pickedImage = pickedImage as File;
       });
     }
   }
@@ -55,9 +55,16 @@ class _NewPostScreenState extends State<NewPostScreen> {
         if (selectedIndices.contains(index)) {
           selectedIndices.remove(index);
         } else {
-          selectedIndices.add(index);
+          if (selectedIndices.length < maxSelection) {
+            selectedIndices.add(index);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('You can only select up to 4 images.'),
+              ),
+            );
+          }
         }
-        // Show the last selected image when in multiple select mode
         if (selectedIndices.isNotEmpty) {
           _pickedImage = recentImages[selectedIndices.last];
         }
@@ -76,10 +83,9 @@ class _NewPostScreenState extends State<NewPostScreen> {
         ? [for (int index in selectedIndices) recentImages[index]]
         : [_pickedImage!];
 
-    // Navigate to the next screen with the selected images
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => NextScreen(selectedImages: selectedImages),
+        builder: (context) => UploadScreen(selectedImages: selectedImages),
       ),
     );
   }
@@ -89,6 +95,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(),
           icon: SvgPicture.string(
             SvgStringName.svgBack,
           ),
@@ -100,25 +108,30 @@ class _NewPostScreenState extends State<NewPostScreen> {
           "New Post",
           style: TextStyle(
             fontSize: 20,
-            fontWeight: FontWeight.w700,
-            fontFamily: "Roboto-Medium",
+            fontWeight: FontWeight.w500,
           ),
         ),
         actions: [
-            Text(
-              "Next",
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                fontFamily: "Roboto-Medium",
-              ),
+          TextButton(
+            onPressed: () {
+              _handleNext();
+            },
+            child: Row(
+              children: [
+                const Text(
+                  'Next',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(width: 5),
+                SvgPicture.string(
+                  SvgStringName.svgNext,
+                ),
+              ],
             ),
-          IconButton(
-            icon: SvgPicture.string(
-              SvgStringName.svgNext,
-            ),
-            onPressed: _handleNext,
           ),
         ],
       ),
@@ -129,7 +142,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
             Stack(
               children: [
                 AspectRatio(
-                  aspectRatio: 1.5, // Adjust the aspect ratio based on your image
+                  aspectRatio: 1.5,
                   child: Image.file(
                     _pickedImage!,
                     fit: BoxFit.cover,
@@ -143,59 +156,85 @@ class _NewPostScreenState extends State<NewPostScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    DropdownButton<String>(
-                      items: const [
-                        DropdownMenuItem(
-                          value: "Recent photos",
-                          child: Text(
-                            "Recent photos",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "Roboto-Medium",
+                Expanded(
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: DropdownButton<String>(
+                          items: const [
+                            DropdownMenuItem(
+                              value: "Recent photos",
+                              child: Text(
+                                "Recent photos",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: "Roboto-Medium",
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
+                          onChanged: (value) {
+                          },
+                          value: "Recent photos",
                         ),
-                        // Add other sources here if needed
-                      ],
-                      onChanged: (value) {
-                        // Handle change
-                      },
-                      value: "Recent photos",
-                    ),
-                    const Icon(Icons.keyboard_arrow_down),
-                  ],
+                      ),
+                      const Icon(Icons.keyboard_arrow_down),
+                    ],
+                  ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _isMultipleSelect = !_isMultipleSelect;
-                    });
-                  },
-                  child: Text(
-                    _isMultipleSelect ? "Single Select" : "Multiple Select",
-                    style: const TextStyle(
+                const SizedBox(width: 8.0),
+                const Icon(
+                  Icons.check_box_outlined,
+                  color: Colors.blue,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
                       color: Colors.blue,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "Roboto-Medium",
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _isMultipleSelect = !_isMultipleSelect;
+                        });
+                      },
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4.0,
+                          horizontal: 8.0,
+                        ),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Text(
+                        _isMultipleSelect ? "Single Select" : "Multiple Select",
+                        style: const TextStyle(
+                          color: Colors.white, // Text color
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "Roboto-Medium",
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
           ),
+
           Expanded(
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 0,
                 mainAxisSpacing: 0,
-                childAspectRatio: 1.0, // Make each child a square
+                childAspectRatio: 1.0,
               ),
               itemCount: recentImages.length,
               itemBuilder: (context, index) {
@@ -213,11 +252,13 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     Positioned(
                       right: 4,
                       top: 4,
-                      child: Checkbox(
-                        value: isSelected,
-                        onChanged: (bool? value) {
-                          _toggleSelection(index);
-                        },
+                      child: GestureDetector(
+                        onTap: () => _toggleSelection(index),
+                        child: Icon(
+                          isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+                          color: isSelected ? Colors.blue : Colors.grey,
+                          size: 24.0,
+                        ),
                       ),
                     ),
                   ],
@@ -234,30 +275,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
             child: Text('Pick Image from Gallery'),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class NextScreen extends StatelessWidget {
-  final List<File> selectedImages;
-
-  const NextScreen({super.key, required this.selectedImages});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Next Screen'),
-      ),
-      body: ListView.builder(
-        itemCount: selectedImages.length,
-        itemBuilder: (context, index) {
-          return Image.file(
-            selectedImages[index],
-            fit: BoxFit.cover,
-          );
-        },
       ),
     );
   }

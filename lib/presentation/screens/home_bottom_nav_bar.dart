@@ -5,7 +5,6 @@ import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vibe_verse/presentation/screens/search_screen/search_screen.dart';
 import 'package:vibe_verse/presentation/screens/upload_post_screen/new_post_screen.dart';
-import 'package:vibe_verse/presentation/screens/upload_post_screen/upload_post_screen.dart';
 import 'package:vibe_verse/presentation/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:vibe_verse/utils/svg_string.dart';
 import 'package:vibe_verse/utils/image_picker.dart';
@@ -33,7 +32,7 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
     return const [
       HomeScreen(),
       SearchScreen(),
-      UploadScreen(),
+      Placeholder(),
       ProfileScreen(),
     ];
   }
