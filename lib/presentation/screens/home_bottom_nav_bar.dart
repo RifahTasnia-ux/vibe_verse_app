@@ -86,10 +86,9 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
           colorBehindNavBar: Colors.white,
         ),
         isVisible: true,
-        navBarHeight: kBottomNavigationBarHeight + 10.h, // Adjusting height to prevent overflow
+        navBarHeight: kBottomNavigationBarHeight + 4.h,
         navBarStyle: NavBarStyle.style6,
-        padding: EdgeInsets.only(bottom: 8.h, top: 12.h),
-        margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h), // Adjusting margin
+        padding: EdgeInsets.only(bottom: 8.h, top: 4.h),
         animationSettings: const NavBarAnimationSettings(
           navBarItemAnimation: ItemAnimationSettings(
             duration: Duration(milliseconds: 400),
