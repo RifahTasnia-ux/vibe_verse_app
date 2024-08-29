@@ -16,5 +16,5 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Roboto',
     textTheme: lightTextTheme,
-  );
+    colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xffffffff)),);
 }
