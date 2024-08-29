@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../utils/svg_string.dart';
+import '../../../widget/alertdialogbox.dart';
 import 'location_search_screen.dart';
+
 
 class UploadScreen extends StatefulWidget {
   final List<File> selectedImages;
@@ -20,7 +22,7 @@ class _UploadScreenState extends State<UploadScreen> {
   void _selectLocation() async {
     final selectedLocation = await Navigator.of(context).push<String>(
       MaterialPageRoute(
-        builder: (context) => LocationSearchScreen(
+        builder: (context) => const LocationSearchScreen(
           latitude: 0,
           longitude: 0,
         ),
@@ -64,7 +66,10 @@ class _UploadScreenState extends State<UploadScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              // Handle Post action
+              showDialog(
+                context: context,
+                builder: (context) => const PostDialog(),
+              );
             },
             child: Row(
               children: [
@@ -94,7 +99,7 @@ class _UploadScreenState extends State<UploadScreen> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 120,
                     width: 150,
                     child: PageView.builder(
@@ -119,12 +124,16 @@ class _UploadScreenState extends State<UploadScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ConstrainedBox(
-                          constraints: BoxConstraints(maxHeight: 150),
-                          child: SingleChildScrollView(
+                          constraints: const BoxConstraints(maxHeight: 150),
+                          child: const SingleChildScrollView(
                             child: TextField(
                               decoration: InputDecoration(
                                 hintText: 'Write a caption',
-                                hintStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w400,fontSize: 16,),
+                                hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                ),
                                 border: InputBorder.none,
                               ),
                               maxLines: null,
@@ -155,12 +164,13 @@ class _UploadScreenState extends State<UploadScreen> {
               TextButton(
                 onPressed: _selectLocation,
                 child: const Text(
-                    'Add Location',
+                  'Add Location',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                  ),),
+                  ),
+                ),
               ),
               const SizedBox(height: 5),
               const Divider(),
@@ -174,7 +184,8 @@ class _UploadScreenState extends State<UploadScreen> {
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.grey.shade300,
                       foregroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
                       ),

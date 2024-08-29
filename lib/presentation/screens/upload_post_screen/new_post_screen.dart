@@ -12,10 +12,10 @@ class NewPostScreen extends StatefulWidget {
   const NewPostScreen({super.key, required this.selectedImage});
 
   @override
-  _NewPostScreenState createState() => _NewPostScreenState();
+  NewPostScreenState createState() => NewPostScreenState();
 }
 
-class _NewPostScreenState extends State<NewPostScreen> {
+class NewPostScreenState extends State<NewPostScreen> {
   File? _pickedImage;
   final ImagePickerService _imagePickerService = ImagePickerService();
   List<File> recentImages = [];
@@ -30,7 +30,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
     _loadRecentImages(); // Load recent images on initialization
   }
 
-  // Function to load recent images
   void _loadRecentImages() async {
     if (mounted) {
       setState(() {
@@ -43,8 +42,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
     final pickedImage = await _imagePickerService.uploadImage(source);
     if (pickedImage != null && mounted) {
       setState(() {
-        recentImages.add(pickedImage as File);
-        _pickedImage = pickedImage as File;
+        recentImages.add(pickedImage);
+        _pickedImage = pickedImage;
       });
     }
   }
@@ -176,8 +175,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                               ),
                             ),
                           ],
-                          onChanged: (value) {
-                          },
+                          onChanged: (value) {},
                           value: "Recent photos",
                         ),
                       ),
@@ -215,7 +213,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                       child: Text(
                         _isMultipleSelect ? "Single Select" : "Multiple Select",
                         style: const TextStyle(
-                          color: Colors.white, // Text color
+                          color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                           fontFamily: "Roboto-Medium",
@@ -228,9 +226,10 @@ class _NewPostScreenState extends State<NewPostScreen> {
             ),
           ),
 
+
           Expanded(
             child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 0,
                 mainAxisSpacing: 0,
@@ -241,7 +240,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                 final isSelected = selectedIndices.contains(index);
                 return Stack(
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       height: double.infinity,
                       child: Image.file(
@@ -268,11 +267,11 @@ class _NewPostScreenState extends State<NewPostScreen> {
           ),
           ElevatedButton(
             onPressed: () => _pickImage('camera'),
-            child: Text('Pick Image from Camera'),
+            child: const Text('Pick Image from Camera'),
           ),
           ElevatedButton(
             onPressed: () => _pickImage('gallery'),
-            child: Text('Pick Image from Gallery'),
+            child: const Text('Pick Image from Gallery'),
           ),
         ],
       ),
