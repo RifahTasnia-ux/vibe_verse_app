@@ -122,7 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _pickImage() async {
-    File? pickedImageFile = await ImagePickerService().uploadImage('gallery');
+    File? pickedImageFile = (await ImagePickerService().uploadImage('gallery'));
     setState(() {
       _imageFile = pickedImageFile;
     });

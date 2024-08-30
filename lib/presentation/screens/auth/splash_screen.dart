@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 .animate()
                 .fadeIn(duration: 1500.ms, curve: Curves.easeIn)
                 .then()
-                .scale(duration: 1000.ms, curve: Curves.easeOut, begin: Offset(0.8, 0.8), end: Offset(1.0, 1.0))
+                .scale(duration: 1000.ms, curve: Curves.easeOut, begin: const Offset(0.8, 0.8), end: const Offset(1.0, 1.0))
                 .then(delay: 500.ms)
                 .fadeOut(duration: 2.seconds,curve: Curves.easeInOut)
         ),

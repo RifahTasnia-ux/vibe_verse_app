@@ -16,8 +16,8 @@ class CustomTextField extends StatefulWidget {
   final TextInputType inputType;
   final VoidCallback? onSuffixTap;
 
-  CustomTextField({
-    Key? key,
+  const CustomTextField({
+    super.key,
     required this.controller,
     this.icon, // IconData is now optional
     this.svgIcon, // Widget for SVG is also optional
@@ -27,7 +27,7 @@ class CustomTextField extends StatefulWidget {
     this.obscureText,
     this.inputType = TextInputType.text,
     this.onSuffixTap,
-  }) : super(key: key);
+  });
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
