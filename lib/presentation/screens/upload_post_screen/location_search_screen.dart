@@ -87,7 +87,7 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Input Text',
-                hintStyle: const TextStyle(color: Colors.grey,fontWeight: FontWeight.w400,),
+                hintStyle: const TextStyle(color: Colors.grey,fontWeight: FontWeight.w400, fontSize: 14,),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

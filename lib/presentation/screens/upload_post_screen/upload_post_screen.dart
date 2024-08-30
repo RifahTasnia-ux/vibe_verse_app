@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../utils/svg_string.dart';
 import '../../../widget/alertdialogbox.dart';
 import 'location_search_screen.dart';
@@ -18,6 +17,7 @@ class UploadScreen extends StatefulWidget {
 
 class _UploadScreenState extends State<UploadScreen> {
   String? _selectedLocation;
+  String _postMessage = '';
 
   void _selectLocation() async {
     final selectedLocation = await Navigator.of(context).push<String>(
@@ -40,6 +40,17 @@ class _UploadScreenState extends State<UploadScreen> {
     setState(() {
       _selectedLocation = null;
     });
+  }
+
+  void _showPostDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => PostDialog(
+        selectedImages: widget.selectedImages,
+        selectedLocation: _selectedLocation,
+        postMessage: _postMessage,
+      ),
+    );
   }
 
   @override
@@ -66,10 +77,7 @@ class _UploadScreenState extends State<UploadScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => const PostDialog(),
-              );
+              _showPostDialog(); // Show the PostDialog
             },
             child: Row(
               children: [
@@ -125,19 +133,22 @@ class _UploadScreenState extends State<UploadScreen> {
                       children: [
                         ConstrainedBox(
                           constraints: const BoxConstraints(maxHeight: 150),
-                          child: const SingleChildScrollView(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                hintText: 'Write a caption',
-                                hintStyle: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16,
-                                ),
-                                border: InputBorder.none,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Write a caption',
+                              hintStyle: const TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
                               ),
-                              maxLines: null,
+                              border: InputBorder.none,
                             ),
+                            maxLines: null,
+                            onChanged: (value) {
+                              setState(() {
+                                _postMessage = value; // Update the post message
+                              });
+                            },
                           ),
                         ),
                       ],
@@ -178,9 +189,7 @@ class _UploadScreenState extends State<UploadScreen> {
                 spacing: 8,
                 children: List.generate(3, (index) {
                   return TextButton(
-                    onPressed: () {
-                      // Handle Multiple Select action
-                    },
+                    onPressed: () {},
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.grey.shade300,
                       foregroundColor: Colors.black,
