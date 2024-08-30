@@ -25,9 +25,6 @@ class ProfileImageWidget extends StatelessWidget {
             height: 128,
             fit: BoxFit.cover,
             imageUrl: storyImagePath,
-            placeholder: (context, url) => const Center(
-              child: CircularProgressIndicator(),
-            ),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),
@@ -53,9 +50,6 @@ class ProfileImageWidget extends StatelessWidget {
                   height: 40,
                   fit: BoxFit.cover,
                   imageUrl: profileDpPath,
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),

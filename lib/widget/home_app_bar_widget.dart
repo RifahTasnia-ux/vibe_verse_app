@@ -100,7 +100,7 @@ class _HomeAppBarWidgetState extends State<HomeAppBarWidget> {
                     BorderRadius.circular(20),
                   ),
                   child: Center(
-                    child: SvgPicture.string(SvgStringName.svgMessageIcon),
+                    child: SvgPicture.string(SvgStringName.svgLogOutIcon,height: 24,width: 24,),
                   ),
                 ),
               ),

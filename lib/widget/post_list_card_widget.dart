@@ -39,9 +39,6 @@ class PostListCardWidget extends StatelessWidget {
                     height: 40,
                     fit: BoxFit.cover,
                     imageUrl: profilePictureUrl,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
                     errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                 ),

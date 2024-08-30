@@ -43,10 +43,6 @@ class _StaggeredGridWidgetState extends State<StaggeredGridWidget> {
               child: CachedNetworkImage(
                 imageUrl: linkUrls[index],
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: Colors.grey[200], // Placeholder color
-                  height: 150,
-                ),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
