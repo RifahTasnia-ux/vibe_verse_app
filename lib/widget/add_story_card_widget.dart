@@ -46,7 +46,7 @@ class AddStoryCardWidget extends StatelessWidget {
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
-              const SizedBox(height: 2.0),
+              const SizedBox(height: 3.0),
               const Expanded(
                 child: Text(
                   "Create story",

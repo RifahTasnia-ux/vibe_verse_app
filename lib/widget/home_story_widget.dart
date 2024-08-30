@@ -15,7 +15,6 @@ class HomeStoryWidget extends StatelessWidget {
         child: Row(
           children: [
             AddStoryCardWidget(),
-            SizedBox(width: 8.0),
             StoryListWidget(),
           ],
         ),

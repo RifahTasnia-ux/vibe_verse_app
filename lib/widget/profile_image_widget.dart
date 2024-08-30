@@ -16,7 +16,10 @@ class ProfileImageWidget extends StatelessWidget {
     return Stack(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(5),
+            topRight: Radius.circular(5),
+          ),
           child: CachedNetworkImage(
             width: 96,
             height: 128,

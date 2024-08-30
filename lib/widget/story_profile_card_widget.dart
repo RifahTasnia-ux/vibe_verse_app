@@ -27,7 +27,7 @@ class StoryProfileCardWidget extends StatelessWidget {
       child: Column(
         children: [
           ProfileImageWidget(profileDpPath: profileDpPath, storyImagePath: storyImagePath,),
-          const SizedBox(height: 2.0),
+          const SizedBox(height: 3.0),
           Expanded(
             child: Text(
               name,
