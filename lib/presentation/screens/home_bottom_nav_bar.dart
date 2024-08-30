@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vibe_verse/presentation/screens/search_screen/search_screen.dart';
 import 'package:vibe_verse/presentation/screens/upload_post_screen/new_post_screen.dart';
-import 'package:vibe_verse/presentation/screens/upload_post_screen/upload_post_screen.dart';
 import 'package:vibe_verse/presentation/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:vibe_verse/utils/svg_string.dart';
 
@@ -55,6 +54,9 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
         inactiveIcon: SvgPicture.string(SvgStringName.svgAddIcon, height: 24, width: 24),
         activeColorPrimary: const Color(0xff4478FF),
         inactiveColorPrimary: Colors.black,
+        onPressed: (context) {
+          _showPhotoPickerDialog();
+        },
       ),
       PersistentBottomNavBarItem(
         icon: SvgPicture.string(SvgStringName.svgProfileIconSelected,height: 24,width: 24,),
@@ -113,7 +115,6 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
         navBarHeight: kBottomNavigationBarHeight + 4.h,
         navBarStyle: NavBarStyle.style6,
         padding: EdgeInsets.only(bottom: 8.h, top: 4.h),
-        margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
         animationSettings: const NavBarAnimationSettings(
           navBarItemAnimation: ItemAnimationSettings(
             duration: Duration(milliseconds: 400),
