@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vibe_verse/presentation/screens/search_screen/search_screen.dart';
 import 'package:vibe_verse/presentation/screens/upload_post_screen/new_post_screen.dart';
 import 'package:vibe_verse/presentation/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:vibe_verse/utils/svg_string.dart';
-import 'package:vibe_verse/utils/image_picker.dart';
 
-import 'home_screen/home_screen.dart';
+import '../../utils/image_picker.dart';
 import '../../widget/photodialogbox.dart';
+import 'home_screen/home_screen.dart';
 
 class PersistentBottomNavBar extends StatefulWidget {
   const PersistentBottomNavBar({super.key});
@@ -59,8 +59,9 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
         },
       ),
       PersistentBottomNavBarItem(
-        icon: SvgPicture.string(SvgStringName.svgProfileIconSelected, height: 24, width: 24),
-        inactiveIcon: SvgPicture.string(SvgStringName.svgProfileIcon, height: 24, width: 24),
+        icon: SvgPicture.string(SvgStringName.svgProfileIconSelected,height: 24,width: 24,),
+        inactiveIcon: SvgPicture.string(SvgStringName.svgProfileIcon,height: 24,width: 24,),
+        // title: "Profile",
         activeColorPrimary: const Color(0xff4478FF),
         inactiveColorPrimary: Colors.black,
       ),
@@ -111,10 +112,9 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
           colorBehindNavBar: Colors.white,
         ),
         isVisible: true,
-        navBarHeight: kBottomNavigationBarHeight + 10.h,
+        navBarHeight: kBottomNavigationBarHeight + 4.h,
         navBarStyle: NavBarStyle.style6,
-        padding: EdgeInsets.only(bottom: 8.h, top: 12.h),
-        margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
+        padding: EdgeInsets.only(bottom: 8.h, top: 4.h),
         animationSettings: const NavBarAnimationSettings(
           navBarItemAnimation: ItemAnimationSettings(
             duration: Duration(milliseconds: 400),
@@ -130,3 +130,4 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
     );
   }
 }
+
