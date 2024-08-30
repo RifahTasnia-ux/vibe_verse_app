@@ -170,7 +170,6 @@ class NewPostScreenState extends State<NewPostScreen> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
-                                  fontFamily: "Roboto-Medium",
                                 ),
                               ),
                             ),
@@ -184,15 +183,11 @@ class NewPostScreenState extends State<NewPostScreen> {
                   ),
                 ),
                 const SizedBox(width: 8.0),
-                const Icon(
-                  Icons.check_box_outlined,
-                  color: Colors.blue,
-                ),
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(4.0),
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -203,6 +198,7 @@ class NewPostScreenState extends State<NewPostScreen> {
                         });
                       },
                       style: TextButton.styleFrom(
+                        foregroundColor: Colors.black,
                         padding: const EdgeInsets.symmetric(
                           vertical: 4.0,
                           horizontal: 8.0,
@@ -210,14 +206,20 @@ class NewPostScreenState extends State<NewPostScreen> {
                         minimumSize: Size.zero,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                      child: Text(
-                        _isMultipleSelect ? "Single Select" : "Multiple Select",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "Roboto-Medium",
-                        ),
+                      child: Row(
+                        children: [
+                          SvgPicture.string(
+                            SvgStringName.svgClip,
+                          ),
+                          const SizedBox(width: 8.0),
+                          Text(
+                            _isMultipleSelect ? "Single Select" : "Multiple Select",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

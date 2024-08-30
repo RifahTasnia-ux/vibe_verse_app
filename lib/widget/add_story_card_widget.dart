@@ -12,7 +12,7 @@ class AddStoryCardWidget extends StatelessWidget {
     this.imageUrl = 'https://via.placeholder.com/150',
     this.width = 96.0,
     this.height = 154.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

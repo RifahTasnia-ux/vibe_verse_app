@@ -49,7 +49,7 @@ class Authentication {
               email: email,
               userName: userName,
               bio: bio,
-              profile: URL == ' ' ? 'https://via.placeholder.com/150' : URL);
+              profile: URL.isEmpty ? 'https://via.placeholder.com/150' : URL);
         } else {
           throw Exceptions('Password and Confirm Password Should be same');
         }
@@ -64,5 +64,4 @@ class Authentication {
   Future<void> signOutUser() async {
     await FirebaseAuth.instance.signOut();
   }
-
 }
