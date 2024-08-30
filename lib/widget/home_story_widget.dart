@@ -8,8 +8,8 @@ class HomeStoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       padding: const EdgeInsets.all(8.0),
-      margin: const EdgeInsets.only(top: 5),
       child: const SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(

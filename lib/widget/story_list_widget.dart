@@ -11,23 +11,23 @@ class StoryListWidget extends StatelessWidget {
       children: [
         StoryProfileCardWidget(
           name: "Sakib",
-          imagePath: UrlPath.sampleImageTwo,
-          profileImagePath: UrlPath.sampleImage,
+          profileDpPath: UrlPath.sampleImageTwo,
+          storyImagePath: UrlPath.sampleImageThree,
         ),
         StoryProfileCardWidget(
           name: "Miraz",
-          imagePath: UrlPath.sampleImageOne,
-          profileImagePath: UrlPath.sampleImageTwo,
+          profileDpPath: UrlPath.sampleImageFour,
+          storyImagePath: UrlPath.sampleImageOne,
         ),
         StoryProfileCardWidget(
           name: "Riyad",
-          imagePath: UrlPath.sampleImageTwo,
-          profileImagePath: UrlPath.sampleImageOne,
+          profileDpPath: UrlPath.sampleImageThree,
+          storyImagePath: UrlPath.sampleImageTwo,
         ),
         StoryProfileCardWidget(
-          name: "Riyad",
-          imagePath: UrlPath.sampleImageThree,
-          profileImagePath: UrlPath.sampleImageFour,
+          name: "Akib",
+          profileDpPath: UrlPath.sampleImageOne,
+          storyImagePath: UrlPath.sampleImageFour,
         ),
       ],
     );

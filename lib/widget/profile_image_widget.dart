@@ -1,13 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProfileImageWidget extends StatelessWidget {
-  final String imagePath;
-  final String profileImagePath;
+  final String storyImagePath;
+  final String profileDpPath;
 
   const ProfileImageWidget({
     super.key,
-    required this.imagePath,
-    required this.profileImagePath,
+    required this.storyImagePath,
+    required this.profileDpPath,
   });
 
   @override
@@ -16,11 +17,15 @@ class ProfileImageWidget extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
-          child: Image.network(
-            imagePath,
-            width: 96.0,
-            height: 128.0,
+          child: CachedNetworkImage(
+            width: 96,
+            height: 128,
             fit: BoxFit.cover,
+            imageUrl: storyImagePath,
+            placeholder: (context, url) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),
         Positioned(
@@ -36,9 +41,21 @@ class ProfileImageWidget extends StatelessWidget {
                 width: 2.0,
               ),
             ),
-            child: CircleAvatar(
-              radius: 15.0,
-              backgroundImage: NetworkImage(profileImagePath),
+            child: Container(
+              padding: const EdgeInsets.all(1.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: CachedNetworkImage(
+                  width: 40,
+                  height: 40,
+                  fit: BoxFit.cover,
+                  imageUrl: profileDpPath,
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+              ),
             ),
           ),
         ),

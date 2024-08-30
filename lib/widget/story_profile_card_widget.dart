@@ -3,14 +3,14 @@ import 'package:vibe_verse/widget/profile_image_widget.dart';
 
 class StoryProfileCardWidget extends StatelessWidget {
   final String name;
-  final String imagePath;
-  final String profileImagePath;
+  final String profileDpPath;
+  final String storyImagePath;
 
   const StoryProfileCardWidget({
     super.key,
     required this.name,
-    required this.imagePath,
-    required this.profileImagePath,
+    required this.profileDpPath,
+    required this.storyImagePath,
   });
 
   @override
@@ -26,13 +26,13 @@ class StoryProfileCardWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          ProfileImageWidget(imagePath: imagePath, profileImagePath: profileImagePath),
+          ProfileImageWidget(profileDpPath: profileDpPath, storyImagePath: storyImagePath,),
           const SizedBox(height: 2.0),
           Expanded(
             child: Text(
               name,
               style: const TextStyle(
-                fontWeight: FontWeight.bold,
+                fontSize: 14
               ),
             ),
           ),
