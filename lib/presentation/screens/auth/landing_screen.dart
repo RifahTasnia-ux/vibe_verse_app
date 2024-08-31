@@ -25,7 +25,7 @@ class LandingScreen extends StatelessWidget {
 
               // Staggered Text Animation for the Title
               Text(
-                'Vibe Verse',
+                'Vibe Verse'.toUpperCase(),
                 style: GoogleFonts.nerkoOne(
                   textStyle: Theme.of(context).textTheme.displayLarge,
                   fontSize: 48.sp,

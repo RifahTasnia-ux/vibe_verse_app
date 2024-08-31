@@ -7,7 +7,7 @@ import '../utils/svg_string.dart';
 class PostListCardWidget extends StatelessWidget {
   final String profilePictureUrl;
   final String name;
-  //final String email;
+  final String email;
   final List<String> postImageUrls;
   final String location;
   final int comments;
@@ -17,7 +17,7 @@ class PostListCardWidget extends StatelessWidget {
     super.key,
     required this.profilePictureUrl,
     required this.name,
-   // required this.email,
+    required this.email,
     required this.postImageUrls,
     required this.location,
     required this.comments,
@@ -55,15 +55,17 @@ class PostListCardWidget extends StatelessWidget {
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
+                          fontFamily: "Satoshi-Medium",
                         ),
                       ),
-                      /*Text(
+                      Text(
                         email,
                         style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xff475467),
+                          fontFamily: "Satoshi-Medium",
                         ),
-                      ),*/
+                      ),
                       Text(
                         location,
                         style: const TextStyle(
@@ -125,7 +127,7 @@ class PostListCardWidget extends StatelessWidget {
                         width: 24,
                       ),
                       const SizedBox(width: 5),
-                      Text("$comments comments"),
+                      Text("$comments comments",style: const TextStyle(fontFamily: "Satoshi-Medium",),),
                     ],
                   ),
                 ),
@@ -141,7 +143,7 @@ class PostListCardWidget extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 caption,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400,fontFamily: "Satoshi-Medium",),
               ),
             ),
           ],

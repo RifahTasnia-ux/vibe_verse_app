@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SafeArea(
         child: Center(
             child: Text(
-              'Vibe Verse',
+              'Vibe Verse'.toUpperCase(),
               style: GoogleFonts.nerkoOne(
                 textStyle: Theme.of(context).textTheme.displayLarge,
                 fontSize: 48,
