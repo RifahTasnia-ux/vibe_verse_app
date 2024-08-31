@@ -40,9 +40,6 @@ class AddStoryCardWidget extends StatelessWidget {
                   height: height * 0.83, // 128/154 to maintain the original ratio
                   fit: BoxFit.cover,
                   imageUrl: UrlPath.sampleProfilePicture,
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -86,7 +83,7 @@ class AddStoryCardWidget extends StatelessWidget {
               ),
               child: const Icon(
                 Icons.add,
-                size: 25,
+                size: 24,
                 color: Colors.white,
               ),
             ),
