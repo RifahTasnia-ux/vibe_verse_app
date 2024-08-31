@@ -59,7 +59,7 @@ class _HomeAppBarWidgetState extends State<HomeAppBarWidget> {
                   child: Text(
                     'Vibe Verse'.toUpperCase(),
                     style: GoogleFonts.nerkoOne(
-                        fontSize: 35,
+                      fontSize: 35,
                       color: const Color(0xff363636),
                       fontWeight: FontWeight.w700,),
                   ),

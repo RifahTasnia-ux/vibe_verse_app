@@ -26,11 +26,12 @@ class LandingScreen extends StatelessWidget {
               // Staggered Text Animation for the Title
               Text(
                 'Vibe Verse',
-                style: GoogleFonts.lobster(
+                style: GoogleFonts.nerkoOne(
                   textStyle: Theme.of(context).textTheme.displayLarge,
                   fontSize: 48.sp,
                   fontWeight: FontWeight.w700,
                   fontStyle: FontStyle.italic,
+                  color: const Color(0xff363636),
                 ),
               )
                   .animate()
