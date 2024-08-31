@@ -95,8 +95,8 @@ class _HomeAppBarWidgetState extends State<HomeAppBarWidget> {
                   height: 35,
                   width: 35,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFd9e0f0).withOpacity(0.8),                    borderRadius:
-                    BorderRadius.circular(20),
+                    color: const Color(0xFFd9e0f0).withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: Center(
                     child: SvgPicture.string(SvgStringName.svgLogOutIcon,height: 24,width: 24,),

@@ -76,3 +76,8 @@ flutter:
       fonts:
         - asset: assets/fonts/Gang_Three.ttf
 
+    - family: Satoshi
+      fonts:
+        - asset: assets/fonts/Satoshi-Medium.otf
+        - asset: assets/fonts/Satoshi-Black.otf
+

@@ -72,6 +72,7 @@ class _UploadScreenState extends State<UploadScreen> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
+            fontFamily: "Satoshi",
           ),
         ),
         actions: [
@@ -87,6 +88,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     color: Colors.blue,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
+                    fontFamily: "Satoshi",
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -140,6 +142,7 @@ class _UploadScreenState extends State<UploadScreen> {
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
+                                fontFamily: "Satoshi",
                               ),
                               border: InputBorder.none,
                             ),
@@ -180,6 +183,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
+                    fontFamily: "Satoshi",
                   ),
                 ),
               ),
@@ -204,6 +208,7 @@ class _UploadScreenState extends State<UploadScreen> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
+                        fontFamily: "Satoshi",
                       ),
                     ),
                   );

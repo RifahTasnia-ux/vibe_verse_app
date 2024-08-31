@@ -34,11 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
       return {
         "profilePictureUrl": data['userProfile'],
         "name": data['userName'],
-        "username": "@${data['userName']}", // Customize username as needed
+        "username": "@${data['userName']}",
         "postImageUrls": List<String>.from(data['imageUrls']),
         "location": data['location'],
         "caption": data['caption'],
-        "comments": 0 // Default comments value
+        "comments": 0
       };
     }).toList();
 

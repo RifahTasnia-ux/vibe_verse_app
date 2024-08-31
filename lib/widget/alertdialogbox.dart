@@ -47,7 +47,7 @@ class PostDialogState extends State<PostDialog> {
         imageUrls: imageUrls,
       );
 
-      Navigator.of(context).pop(); // Dismiss the dialog after posting
+      Navigator.of(context).pop();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Post shared successfully!')),
@@ -91,13 +91,14 @@ class PostDialogState extends State<PostDialog> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    fontFamily: "Satoshi",
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
                 const Text(
                   'Your post will share by clicking yes, if need any change click on edit.',
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 14,fontFamily: "Satoshi",),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
@@ -110,7 +111,7 @@ class PostDialogState extends State<PostDialog> {
                       },
                       child: const Text(
                         'Edit',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: Colors.blue,fontFamily: "Satoshi",),
                       ),
                     ),
                     ElevatedButton(
@@ -123,7 +124,7 @@ class PostDialogState extends State<PostDialog> {
                       ),
                       child: const Text(
                         'Post Now',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white,fontFamily: "Satoshi",),
                       ),
                     ),
                   ],

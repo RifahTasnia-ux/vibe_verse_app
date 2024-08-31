@@ -93,6 +93,7 @@ class PhotoPickerDialog extends StatelessWidget {
                 'Cancel',
                 style: TextStyle(
                   color: Colors.red,
+                  fontFamily: "Satoshi",
                 ),
               ),
             ),
