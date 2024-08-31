@@ -29,9 +29,9 @@ class FirebaseFireStore {
     required List<String> imageUrls,
   }) async {
     final userId = _auth.currentUser?.uid;
-    final userName = await _getUserName(); // Fetch the user's name
-    final userEmail = await _getUserEmail(); // Fetch the user's email
-    final userProfile = await _getUserProfile(); // Fetch the user's profile URL
+    final userName = await _getUserName();
+    final userEmail = await _getUserEmail();
+    final userProfile = await _getUserProfile();
 
     if (userId != null) {
       await _fireStore.collection('posts').add({
@@ -47,6 +47,27 @@ class FirebaseFireStore {
     } else {
       throw Exception('User not logged in');
     }
+  }
+
+  Future<List<Map<String, dynamic>>> fetchPosts() async {
+    final querySnapshot = await _fireStore
+        .collection('posts')
+        .orderBy('timestamp', descending: true)
+        .get();
+
+    return querySnapshot.docs.map((doc) {
+      final data = doc.data();
+      print('Fetched Post Data: $data'); // Debugging print
+      return {
+        'profilePictureUrl': data['userProfile'] ?? '',
+        'name': data['userName'] ?? '',
+        'email': data['userEmail'] ?? '',
+        'postImageUrls': List<String>.from(data['imageUrls'] ?? []),
+        'location': data['location'] ?? 'Unknown Location',
+        'comments': 0,
+        'caption': data['caption'] ?? 'No Caption',
+      };
+    }).toList();
   }
 
   Future<String> _getUserName() async {

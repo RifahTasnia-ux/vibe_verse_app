@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:vibe_verse/utils/url_path.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 import 'package:vibe_verse/widget/post_list_view_widget.dart';
 import 'package:vibe_verse/widget/home_app_bar_widget.dart';
 import 'package:vibe_verse/widget/home_story_widget.dart';
@@ -12,36 +14,43 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Map<String, dynamic>> posts = [
-    {
-      "profilePictureUrl": UrlPath.sampleProfilePicture,
-      "name": "Tamim Chowdhury",
-      "username": "@tamimchowdhury109",
-      "postImageUrl": UrlPath.sampleImageThree,
-      "comments": 20
-    },
-    {
-      "profilePictureUrl": UrlPath.sampleImageFour,
-      "name": "Miraz Ahmed",
-      "username": "@miraz6477",
-      "postImageUrl": UrlPath.sampleImageOne,
-      "comments": 15
-    },
-    {
-      "profilePictureUrl": UrlPath.sampleImage,
-      "name": "Atik Tanvir",
-      "username": "@tanvir1125",
-      "postImageUrl": UrlPath.sampleImageTwo,
-      "comments": 11
-    },
-    {
-      "profilePictureUrl": UrlPath.sampleImageThree,
-      "name": "Soyod Adil Afik",
-      "username": "@afik6412",
-      "postImageUrl": UrlPath.sampleImageOne,
-      "comments": 8
-    }
-  ];
+  List<Map<String, dynamic>> posts = [];
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPosts();
+  }
+
+  Future<void> _fetchPosts() async {
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('posts')
+        .orderBy('timestamp', descending: true)
+        .get();
+
+    final fetchedPosts = snapshot.docs.map((doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      return {
+        "profilePictureUrl": data['userProfile'],
+        "name": data['userName'],
+        "username": "@${data['userName']}", // Customize username as needed
+        "postImageUrls": List<String>.from(data['imageUrls']),
+        "location": data['location'],
+        "caption": data['caption'],
+        "comments": 0 // Default comments value
+      };
+    }).toList();
+
+    setState(() {
+      posts = fetchedPosts;
+    });
+  }
+
+  void _onRefresh() async {
+    await _fetchPosts();
+    _refreshController.refreshCompleted();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +59,22 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: Size.fromHeight(60.0),
         child: HomeAppBarWidget(),
       ),
-      body: CustomScrollView(
-        slivers: [
-          const SliverToBoxAdapter(
-            child: Column(
-              children: [
-                HomeStoryWidget(),
-                SizedBox(height: 2), // Space between the story and posts
-              ],
+      body: SmartRefresher(
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        child: CustomScrollView(
+          slivers: [
+            const SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  HomeStoryWidget(),
+                  SizedBox(height: 2), // Space between the story and posts
+                ],
+              ),
             ),
-          ),
-          PostListView(posts: posts),
-        ],
+            PostListView(posts: posts),
+          ],
+        ),
       ),
     );
   }
