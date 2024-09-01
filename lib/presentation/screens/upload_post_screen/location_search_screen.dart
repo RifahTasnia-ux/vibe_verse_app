@@ -77,6 +77,7 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
             style: TextStyle(
              fontSize: 20,
              fontWeight: FontWeight.w500,
+              fontFamily: "Satoshi",
           ),),
       ),
       body: Column(
@@ -87,7 +88,7 @@ class _LocationSearchScreenState extends State<LocationSearchScreen> {
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Input Text',
-                hintStyle: const TextStyle(color: Colors.grey,fontWeight: FontWeight.w400, fontSize: 14,),
+                hintStyle: const TextStyle(color: Colors.grey,fontWeight: FontWeight.w400, fontSize: 14,fontFamily: "Satoshi",),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vibe_verse/utils/app_colors.dart';
 import 'package:vibe_verse/utils/dialog.dart';
 import '../../../data/firebase_auth.dart';
@@ -102,11 +103,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
 
       if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Registration is Successful! Please Login.'),
+            backgroundColor: Colors.green,
+          ),
         );
-        clearController();
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()),
+          );
+          clearController();
+        });
       }
     } catch (e) {
       if (mounted) {
@@ -155,15 +164,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: ScreenUtil.defaultSize.height * .025.h),
-                const Text(
-                  'Vibe Verse',
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.italic,
-                    fontFamily: "Gang",
-                    color: Colors.black87,
-                  ),
+                Text(
+                  'Vibe Verse'.toUpperCase(),
+                  style: GoogleFonts.nerkoOne(
+                    fontSize: 35,
+                    color: const Color(0xff363636),
+                    fontWeight: FontWeight.w700,),
                 ),
                 SizedBox(height: 25.h),
                 const Text(

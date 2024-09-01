@@ -32,7 +32,8 @@ class StoryProfileCardWidget extends StatelessWidget {
             child: Text(
               name,
               style: const TextStyle(
-                fontSize: 14
+                fontSize: 14,
+                fontFamily: "Satoshi-Black",
               ),
             ),
           ),
