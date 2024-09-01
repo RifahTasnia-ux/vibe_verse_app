@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vibe_verse/presentation/screens/auth/registration_screen.dart';
 import 'package:vibe_verse/presentation/screens/home_bottom_nav_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -68,10 +69,18 @@ class _LoginScreenState extends State<LoginScreen> {
       await Authentication()
           .login(email: emailTEC.text, password: passwordTEC.text);
       if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const PersistentBottomNavBar()),
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Log in is Successful!'),
+            backgroundColor: Colors.green,
+          ),
         );
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const PersistentBottomNavBar()),
+          );
+        });
         emailTEC.clear();
         passwordTEC.clear();
       }
@@ -103,15 +112,12 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: ScreenUtil.defaultSize.height * .15.h),
-              const Text(
-                'Vibe Verse',
-                style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.italic,
-                    fontFamily: "Gang",
-                    color: Colors.black87
-                ),
+              Text(
+                'Vibe Verse'.toUpperCase(),
+                style: GoogleFonts.nerkoOne(
+                  fontSize: 35,
+                  color: const Color(0xff363636),
+                  fontWeight: FontWeight.w700,),
               ),
               SizedBox(height: 40.h),
               const Text(

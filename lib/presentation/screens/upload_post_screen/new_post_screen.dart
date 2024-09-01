@@ -185,7 +185,7 @@ class NewPostScreenState extends State<NewPostScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(width: 8.0),
+                const SizedBox(width: 7.0),
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Container(

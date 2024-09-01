@@ -29,9 +29,9 @@ class FirebaseFireStore {
     required List<String> imageUrls,
   }) async {
     final userId = _auth.currentUser?.uid;
-    final userName = await _getUserName();
-    final userEmail = await _getUserEmail();
-    final userProfile = await getUserProfile();
+    final userName = await _fetchUserName();
+    final userEmail = await _fetchUserEmail();
+    final userProfile = await _fetchUserProfile();
 
     if (userId != null) {
       await _fireStore.collection('posts').add({
@@ -69,14 +69,18 @@ class FirebaseFireStore {
     }).toList();
   }
 
-  Future<String> _getUserName() async {
+  Future<String> _fetchUserName() async {
     final userDoc = await _fireStore.collection('users').doc(_auth.currentUser?.uid).get();
     return userDoc.data()?['userName'] ?? 'Anonymous';
   }
 
-  Future<String> _getUserEmail() async {
+  Future<String> _fetchUserEmail() async {
     final userDoc = await _fireStore.collection('users').doc(_auth.currentUser?.uid).get();
     return userDoc.data()?['email'] ?? 'No Email';
+  }
+  Future<String> _fetchUserProfile() async {
+    final userDoc = await _fireStore.collection('users').doc(_auth.currentUser?.uid).get();
+    return userDoc.data()?['profile'] ?? 'https://via.placeholder.com/150';
   }
 
   Future<Map<String, dynamic>> getUserProfile() async {
