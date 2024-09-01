@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:vibe_verse/utils/url_path.dart';
 
 class AddStoryCardWidget extends StatelessWidget {
   final String imageUrl;
@@ -37,9 +36,9 @@ class AddStoryCardWidget extends StatelessWidget {
                 ),
                 child: CachedNetworkImage(
                   width: width,
-                  height: height * 0.83, // 128/154 to maintain the original ratio
+                  height: height * 0.83,
                   fit: BoxFit.cover,
-                  imageUrl: UrlPath.sampleProfilePicture,
+                  imageUrl: imageUrl,
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
@@ -71,7 +70,7 @@ class AddStoryCardWidget extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: height * 0.32, // Adjust icon position based on dynamic height
+            top: height * 0.32,
             child: Container(
               padding: const EdgeInsets.all(6.0),
               decoration: BoxDecoration(

@@ -31,7 +31,7 @@ class FirebaseFireStore {
     final userId = _auth.currentUser?.uid;
     final userName = await _getUserName();
     final userEmail = await _getUserEmail();
-    final userProfile = await _getUserProfile();
+    final userProfile = await getUserProfile();
 
     if (userId != null) {
       await _fireStore.collection('posts').add({
@@ -57,9 +57,8 @@ class FirebaseFireStore {
 
     return querySnapshot.docs.map((doc) {
       final data = doc.data();
-      print('Fetched Post Data: $data'); // Debugging print
       return {
-        'profilePictureUrl': data['userProfile'] ?? '',
+        'profilePictureUrl': data['userProfile'] ?? 'https://via.placeholder.com/150',
         'name': data['userName'] ?? '',
         'email': data['userEmail'] ?? '',
         'postImageUrls': List<String>.from(data['imageUrls'] ?? []),
@@ -80,8 +79,40 @@ class FirebaseFireStore {
     return userDoc.data()?['email'] ?? 'No Email';
   }
 
-  Future<String> _getUserProfile() async {
-    final userDoc = await _fireStore.collection('users').doc(_auth.currentUser?.uid).get();
-    return userDoc.data()?['profile'] ?? 'https://via.placeholder.com/150';
+  Future<Map<String, dynamic>> getUserProfile() async {
+    try {
+      final userId = _auth.currentUser?.uid;
+      if (userId == null) {
+        throw Exception('User not logged in');
+      }
+      final userDoc = await _fireStore.collection('users').doc(userId).get();
+      if (!userDoc.exists) {
+        throw Exception('User document does not exist');
+      }
+      final userData = userDoc.data() ?? {};
+      userData['userId'] = userId;
+      return userData;
+    } catch (e) {
+      print('Error fetching user profile: $e');
+      return {};
+    }
   }
+
+  Future<List<Map<String, dynamic>>> getAllUserProfiles() async {
+    try {
+      final querySnapshot = await _fireStore.collection('users').get();
+      return querySnapshot.docs.map((doc) {
+        final data = doc.data();
+        return {
+          'userId': doc.id,
+          'userName': data['userName'] ?? 'Anonymous',
+          'profile': data['profile'] ?? 'https://via.placeholder.com/150',
+        };
+      }).toList();
+    } catch (e) {
+      print('Error fetching all user profiles: $e');
+      return [];
+    }
+  }
+
 }
