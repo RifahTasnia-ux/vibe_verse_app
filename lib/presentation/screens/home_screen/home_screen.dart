@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> otherUsersProfiles = [];
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
   final FirebaseFireStore _firebaseFireStore = FirebaseFireStore();
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -26,9 +27,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _fetchData() async {
-    await _getUserProfile();
-    await _fetchPosts();
-    await _fetchUserProfiles();
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await _getUserProfile();
+      await _fetchUserProfiles();
+      await _fetchPosts();
+    } catch (e) {
+      print("Error fetching data: $e");
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   Future<void> _getUserProfile() async {
@@ -76,11 +89,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
-        child: HomeAppBarWidget(),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60.0),
+        child: HomeAppBarWidget(
+          profileImageUrl: userProfile['profile'] ?? 'https://via.placeholder.com/150',
+        ),
       ),
-      body: SmartRefresher(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SmartRefresher(
         controller: _refreshController,
         onRefresh: _onRefresh,
         child: CustomScrollView(

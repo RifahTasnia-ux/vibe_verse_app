@@ -4,13 +4,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:vibe_verse/utils/svg_string.dart';
-import 'package:vibe_verse/utils/url_path.dart';
 
 import '../data/firebase_auth.dart';
 import '../presentation/screens/auth/splash_screen.dart';
 
 class HomeAppBarWidget extends StatefulWidget {
-  const HomeAppBarWidget({super.key});
+  final String profileImageUrl;
+  const HomeAppBarWidget({
+    Key? key, required this.profileImageUrl
+  }) : super(key: key);
 
   @override
   State<HomeAppBarWidget> createState() => _HomeAppBarWidgetState();
@@ -32,7 +34,7 @@ class _HomeAppBarWidgetState extends State<HomeAppBarWidget> {
                 width: 35.0,
                 height: 35.0,
                 child: CachedNetworkImage(
-                  imageUrl: UrlPath.sampleProfilePicture,
+                  imageUrl: widget.profileImageUrl,
                   imageBuilder: (context, imageProvider) =>
                       Container(
                         decoration: BoxDecoration(
