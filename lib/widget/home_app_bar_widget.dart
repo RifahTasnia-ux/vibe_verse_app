@@ -84,13 +84,17 @@ class _HomeAppBarWidgetState extends State<HomeAppBarWidget> {
               ),
               const SizedBox(width: 10,),
               GestureDetector(
-                onTap: ()async{
+                onTap: () async {
                   await Authentication().signOutUser();
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: const SplashScreen(),
                     withNavBar: false,
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const SplashScreen()),
+                        (route) => false,
                   );
                 },
                 child: Container(
@@ -101,7 +105,7 @@ class _HomeAppBarWidgetState extends State<HomeAppBarWidget> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Center(
-                    child: SvgPicture.string(SvgStringName.svgLogOutIcon,height: 24,width: 24,),
+                    child: SvgPicture.string(SvgStringName.svgLogOutIcon, height: 24, width: 24),
                   ),
                 ),
               ),
