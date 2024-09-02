@@ -25,6 +25,7 @@ class Authentication {
     required String email,
     required String password,
     required String confirmPassword,
+    required String fullName,
     required String userName,
     required String bio,
     required File profile,
@@ -34,6 +35,7 @@ class Authentication {
     try {
       if (email.isNotEmpty &&
           password.isNotEmpty &&
+          fullName.isNotEmpty &&
           userName.isNotEmpty &&
           bio.isNotEmpty) {
         if (password == confirmPassword) {
@@ -48,6 +50,7 @@ class Authentication {
           await FirebaseFireStore().createUser(
               email: email,
               userName: userName,
+              fullName: fullName,
               bio: bio,
               profile: URL.isEmpty ? 'https://via.placeholder.com/150' : URL);
         } else {
