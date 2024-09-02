@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vibe_verse/widget/profile_grid_view_widget.dart';
 
 class ProfileGridListWidget extends StatelessWidget {
   const ProfileGridListWidget({
-    super.key,
+    super.key, required List<Map<String, dynamic>> posts,
   });
 
   @override
@@ -14,9 +13,9 @@ class ProfileGridListWidget extends StatelessWidget {
         length: 2,
         child: Container(
           color: Colors.white,
-          child: Column(
+          child: const Column(
             children: [
-              const TabBar(
+              TabBar(
                 indicatorColor: Color(0xff101828),
                 indicatorWeight: 0.1,
                 labelColor: Color(0xff101828),
@@ -52,7 +51,7 @@ class ProfileGridListWidget extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     StaggeredGridWidget(),
-                    const Center(child: Text("List view content")),
+                    Center(child: Text("List view content")),
                   ],
                 ),
               ),
