@@ -25,12 +25,14 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final emailTEC = TextEditingController();
+  final fullNameTEC = TextEditingController();
   final userNameTEC = TextEditingController();
   final bioTEC = TextEditingController();
   final passwordTEC = TextEditingController();
   final confirmPasswordTEC = TextEditingController();
 
   final emailFocus = FocusNode();
+  final fullNameFocus = FocusNode();
   final userNameFocus = FocusNode();
   final bioFocus = FocusNode();
   final passwordFocus = FocusNode();
@@ -39,6 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   File? _imageFile;
   bool _isLoading = false;
   bool _isEmailFilled = false;
+  bool _isFullNameFilled = false;
   bool _isUserNameFilled = false;
   bool _isBioFilled = false;
   bool _isPasswordFilled = false;
@@ -49,6 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
 
     emailTEC.addListener(_updateButtonState);
+    fullNameTEC.addListener(_updateButtonState);
     userNameTEC.addListener(_updateButtonState);
     bioTEC.addListener(_updateButtonState);
     passwordTEC.addListener(_updateButtonState);
@@ -58,17 +62,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void dispose() {
     emailTEC.removeListener(_updateButtonState);
+    fullNameTEC.removeListener(_updateButtonState);
     userNameTEC.removeListener(_updateButtonState);
     bioTEC.removeListener(_updateButtonState);
     passwordTEC.removeListener(_updateButtonState);
     confirmPasswordTEC.removeListener(_updateButtonState);
 
     emailTEC.dispose();
+    fullNameTEC.dispose();
     userNameTEC.dispose();
     bioTEC.dispose();
     passwordTEC.dispose();
     confirmPasswordTEC.dispose();
     emailFocus.dispose();
+    fullNameFocus.dispose();
     userNameFocus.dispose();
     bioFocus.dispose();
     passwordFocus.dispose();
@@ -80,6 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _updateButtonState() {
     setState(() {
       _isEmailFilled = emailTEC.text.isNotEmpty;
+      _isFullNameFilled = fullNameTEC.text.isNotEmpty;
       _isUserNameFilled = userNameTEC.text.isNotEmpty;
       _isBioFilled = bioTEC.text.isNotEmpty;
       _isPasswordFilled = passwordTEC.text.isNotEmpty;
@@ -97,6 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         email: emailTEC.text,
         password: passwordTEC.text,
         confirmPassword: confirmPasswordTEC.text,
+        fullName: fullNameTEC.text,
         userName: userNameTEC.text,
         bio: bioTEC.text,
         profile: _imageFile ?? File(''),
@@ -139,6 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void clearController() {
     emailTEC.clear();
+    fullNameTEC.clear();
     userNameTEC.clear();
     bioTEC.clear();
     passwordTEC.clear();
@@ -149,15 +159,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     final isFormValid = _isEmailFilled &&
         _isUserNameFilled &&
+        _isFullNameFilled &&
         _isBioFilled &&
         _isPasswordFilled &&
         _isConfirmPasswordFilled;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.primary,
       body: SafeArea(
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 32.w),
             child: Column(
@@ -216,11 +228,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(height: 16.h),
                 CustomTextField(
-                  controller: userNameTEC,
+                  controller: fullNameTEC,
                   svgIcon: Padding(
                     padding: const EdgeInsets.all(10),
                     child: SvgPicture.string(
                       SvgStringName.svgPerson,
+                      height: 20,
+                      width: 20,
+                    ),
+                  ),
+                  hintText: 'Full Name',
+                  focusNode: fullNameFocus,
+                  inputType: TextInputType.text,
+                ),
+                SizedBox(height: 16.h),
+                CustomTextField(
+                  controller: userNameTEC,
+                  svgIcon: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SvgPicture.string(
+                      SvgStringName.svgUserHandle,
                       height: 20,
                       width: 20,
                     ),

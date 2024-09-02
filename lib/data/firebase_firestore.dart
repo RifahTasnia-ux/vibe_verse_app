@@ -8,11 +8,13 @@ class FirebaseFireStore {
   Future<bool> createUser({
     required String email,
     required String userName,
+    required String fullName,
     required String bio,
     required String profile,
   }) async {
     await _fireStore.collection('users').doc(_auth.currentUser?.uid ?? '').set({
       'email': email,
+      'fullName': fullName,
       'userName': userName,
       'bio': bio,
       'profile': profile,
