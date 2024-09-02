@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../data/firebase_firestore.dart';
@@ -28,7 +29,6 @@ class PostDialogState extends State<PostDialog> {
     });
 
     try {
-      // Upload each image to Firebase Storage
       List<String> imageUrls = [];
       for (File image in widget.selectedImages) {
         final storageRef = FirebaseStorage.instance
@@ -40,23 +40,21 @@ class PostDialogState extends State<PostDialog> {
         imageUrls.add(downloadUrl);
       }
 
-      // Save the post details to Firestore
       await FirebaseFireStore().addPost(
         caption: widget.postMessage,
         location: widget.selectedLocation ?? '',
         imageUrls: imageUrls,
       );
-
       Navigator.of(context).pop();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Post shared successfully!')),
+      _showFlushbar(
+        'Post shared successfully !',
+        Colors.green,
       );
     } catch (error) {
-      Navigator.of(context).pop(); // Dismiss the dialog
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to post: $error')),
+      Navigator.of(context).pop();
+      _showFlushbar(
+        'Failed to post! Please Try Again with Proper Inputs.',
+        Colors.redAccent,
       );
     } finally {
       setState(() {
@@ -64,12 +62,21 @@ class PostDialogState extends State<PostDialog> {
       });
     }
   }
+  void _showFlushbar(String message, Color color) {
+    Flushbar(
+      message: message,
+      duration: const Duration(seconds: 3),
+      backgroundColor: color,
+      margin: const EdgeInsets.all(8),
+      borderRadius: BorderRadius.circular(8),
+      flushbarPosition: FlushbarPosition.TOP,
+    )..show(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Dialog content
         AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
@@ -107,7 +114,7 @@ class PostDialogState extends State<PostDialog> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop(); // Dismiss the dialog
+                        Navigator.of(context).pop();
                       },
                       child: const Text(
                         'Edit',
@@ -133,7 +140,6 @@ class PostDialogState extends State<PostDialog> {
             ),
           ),
         ),
-        // Full-screen loader
         if (_isLoading)
           Positioned.fill(
             child: Container(

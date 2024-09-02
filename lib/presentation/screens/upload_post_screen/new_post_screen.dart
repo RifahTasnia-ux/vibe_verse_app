@@ -27,13 +27,13 @@ class NewPostScreenState extends State<NewPostScreen> {
   void initState() {
     super.initState();
     _pickedImage = File(widget.selectedImage.path);
-    _loadRecentImages(); // Load recent images on initialization
+    _loadRecentImages();
   }
 
   void _loadRecentImages() async {
     if (mounted) {
       setState(() {
-        recentImages = [_pickedImage!]; // Add the selected image to recent images
+        recentImages = [_pickedImage!];
       });
     }
   }
@@ -77,7 +77,6 @@ class NewPostScreenState extends State<NewPostScreen> {
   }
 
   void _handleNext() {
-    // Create the list of selected images
     List<File> selectedImages = _isMultipleSelect
         ? [for (int index in selectedIndices) recentImages[index]]
         : [_pickedImage!];
@@ -250,7 +249,7 @@ class NewPostScreenState extends State<NewPostScreen> {
                       width: double.infinity,
                       height: double.infinity,
                       child: Image.file(
-                        recentImages[index], // Display the recent image
+                        recentImages[index],
                         fit: BoxFit.cover,
                       ),
                     ),

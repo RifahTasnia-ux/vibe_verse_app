@@ -1,13 +1,13 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vibe_verse/presentation/screens/auth/registration_screen.dart';
-import 'package:vibe_verse/presentation/screens/home_bottom_nav_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vibe_verse/presentation/screens/home_bottom_nav_bar.dart';
 import '../../../data/firebase_auth.dart';
 import '../../../utils/app_colors.dart';
-import '../../../utils/dialog.dart';
 import '../../../utils/svg_string.dart';
 import '../../../widget/custom_button.dart';
 import '../../../widget/custom_text_field.dart';
@@ -69,11 +69,9 @@ class _LoginScreenState extends State<LoginScreen> {
       await Authentication()
           .login(email: emailTEC.text, password: passwordTEC.text);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Log in is Successful!'),
-            backgroundColor: Colors.green,
-          ),
+        _showFlushbar(
+          'Log in is Successful !',
+          Colors.green,
         );
         Future.delayed(const Duration(seconds: 2), () {
           Navigator.pushReplacement(
@@ -86,7 +84,10 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       if (mounted) {
-        dialogueBuilder(context, e.toString());
+        _showFlushbar(
+          'Log in Failed ! Try Again with Proper Inputs.',
+          Colors.redAccent,
+        );
       }
     } finally {
       if (mounted) {
@@ -95,6 +96,16 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       }
     }
+  }
+  void _showFlushbar(String message, Color color) {
+    Flushbar(
+      message: message,
+      duration: const Duration(seconds: 3),
+      backgroundColor: color,
+      margin: const EdgeInsets.all(8),
+      borderRadius: BorderRadius.circular(8),
+      flushbarPosition: FlushbarPosition.TOP,
+    )..show(context);
   }
 
   @override
@@ -175,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     .leading,
                 contentPadding: EdgeInsets.zero,
                 activeColor: _isChecked ? const Color(0xff779aef) : Colors.grey[700], // Change color based on the state
-                checkColor: Colors.white, // Optional: change the checkmark color
+                checkColor: Colors.white,
               ),
               SizedBox(height: 15.h),
               CustomButton(
