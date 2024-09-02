@@ -136,9 +136,9 @@ class _UploadScreenState extends State<UploadScreen> {
                         ConstrainedBox(
                           constraints: const BoxConstraints(maxHeight: 150),
                           child: TextField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Write a caption',
-                              hintStyle: const TextStyle(
+                              hintStyle: TextStyle(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,

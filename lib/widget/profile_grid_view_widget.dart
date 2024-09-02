@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -56,7 +55,7 @@ class _StaggeredGridWidgetState extends State<StaggeredGridWidget> {
 class Tile extends StatelessWidget {
   final int index;
 
-  const Tile({Key? key, required this.index}) : super(key: key);
+  const Tile({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {

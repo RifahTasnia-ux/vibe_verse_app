@@ -104,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
           slivers: [
             SliverToBoxAdapter(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   HomeStoryWidget(
                     profileImageUrl: userProfile['profile'] ?? 'https://via.placeholder.com/150',

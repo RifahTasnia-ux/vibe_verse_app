@@ -6,8 +6,8 @@ class AddStoryCardWidget extends StatelessWidget {
   final double width;
   final double height;
 
-  const AddStoryCardWidget({
-    Key? key,
+  const AddStoryCardWidget({super.key, 
+    Key,
     this.imageUrl = 'https://via.placeholder.com/150',
     this.width = 96.0,
     this.height = 154.0,
