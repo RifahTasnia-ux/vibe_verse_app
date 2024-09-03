@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../utils/svg_string.dart';
 
-class ProfileListViewCardWidget extends StatelessWidget {
+class ProfileListViewCardWidget extends StatefulWidget {
   final String profilePictureUrl;
   final String fullName;
   final String email;
@@ -25,8 +26,15 @@ class ProfileListViewCardWidget extends StatelessWidget {
   });
 
   @override
+  _ProfileListViewCardWidgetState createState() =>
+      _ProfileListViewCardWidgetState();
+}
+
+class _ProfileListViewCardWidgetState extends State<ProfileListViewCardWidget> {
+  final PageController _pageController = PageController();
+
+  @override
   Widget build(BuildContext context) {
-    print("Profile full name: $caption");
     return Card(
       color: Colors.white,
       child: Container(
@@ -42,8 +50,9 @@ class ProfileListViewCardWidget extends StatelessWidget {
                     width: 40,
                     height: 40,
                     fit: BoxFit.cover,
-                    imageUrl: profilePictureUrl,
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    imageUrl: widget.profilePictureUrl,
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -52,31 +61,31 @@ class ProfileListViewCardWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        fullName,
+                        widget.fullName,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
                           fontFamily: "Satoshi-Medium",
                         ),
                       ),
-                     Row(
-                       children: [
-                         const Text(
-                           "1d",
-                           style: TextStyle(
-                             fontSize: 12,
-                             color: Color(0xff475467),
-                             fontFamily: "Satoshi-Medium",
-                           ),
-                         ),
-                         _buildSeparator(),
-                         SizedBox(
-                           height: 15,
-                           width: 15,
-                           child: SvgPicture.asset("assets/svg/svg_earth.svg",),
-                         ),
-                       ],
-                     )
+                      Row(
+                        children: [
+                          const Text(
+                            "1d",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xff475467),
+                              fontFamily: "Satoshi-Medium",
+                            ),
+                          ),
+                          _buildSeparator(),
+                          SizedBox(
+                            height: 15,
+                            width: 15,
+                            child: SvgPicture.asset("assets/svg/svg_earth.svg"),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -97,20 +106,26 @@ class ProfileListViewCardWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            // PageView for image slider
-            SizedBox(
-              height: 250, // Adjust height as needed
-              child: PageView.builder(
-                itemCount: postImageUrls.length,
-                itemBuilder: (context, index) {
-                  return CachedNetworkImage(
-                    imageUrl: postImageUrls[index],
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                  );
-                },
-              ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 250, // Adjust height as needed
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: widget.postImageUrls.length,
+                    itemBuilder: (context, index) {
+                      return CachedNetworkImage(
+                        imageUrl: widget.postImageUrls[index],
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             Row(
@@ -122,19 +137,38 @@ class ProfileListViewCardWidget extends StatelessWidget {
                   width: 24,
                 ),
                 const SizedBox(width: 8),
-                Expanded(
-                  child: Row(
-                    children: [
-                      SvgPicture.string(
-                        SvgStringName.svgCommentIcon,
-                        height: 24,
-                        width: 24,
-                      ),
-                      const SizedBox(width: 5),
-                      Text("$comments comments",style: const TextStyle(fontFamily: "Satoshi-Medium",),),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    SvgPicture.string(
+                      SvgStringName.svgCommentIcon,
+                      height: 24,
+                      width: 24,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      "${widget.comments} comments",
+                      style: const TextStyle(fontFamily: "Satoshi-Medium"),
+                    ),
+                  ],
                 ),
+                const SizedBox(
+                  width: 25,
+                ),
+                if (widget.postImageUrls.length > 1) ...[
+                  SmoothPageIndicator(
+                    controller: _pageController,
+                    count: widget.postImageUrls.length,
+                    effect: const WormEffect(
+                      dotWidth: 8.0,
+                      dotHeight: 8.0,
+                      spacing: 4.0,
+                      radius: 8.0,
+                      dotColor: Colors.grey,
+                      activeDotColor: Colors.blue,
+                    ),
+                  ),
+                ],
+                const Expanded(child: SizedBox()),
                 SvgPicture.string(
                   SvgStringName.svgSavedIcon,
                   height: 24,
@@ -146,8 +180,12 @@ class ProfileListViewCardWidget extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                caption,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400,fontFamily: "Satoshi-Medium",),
+                widget.caption,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: "Satoshi-Medium",
+                ),
               ),
             ),
           ],
@@ -155,11 +193,11 @@ class ProfileListViewCardWidget extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _buildSeparator() {
-  return const Text(
-    " • ",
-    style: TextStyle(color: Color(0xffD0D5DD)),
-  );
+  Widget _buildSeparator() {
+    return const Text(
+      " • ",
+      style: TextStyle(color: Color(0xffD0D5DD)),
+    );
+  }
 }
