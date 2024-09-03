@@ -1,19 +1,17 @@
 import 'dart:io';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vibe_verse/utils/app_colors.dart';
-import 'package:vibe_verse/utils/dialog.dart';
 import '../../../data/firebase_auth.dart';
 import '../../../utils/image_picker.dart';
 import '../../../utils/svg_string.dart';
 import '../../../widget/custom_button.dart';
 import '../../../widget/custom_text_field.dart';
 import 'login_screen.dart';
-
-
 
 
 class SignUpScreen extends StatefulWidget {
@@ -112,11 +110,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Registration is Successful! Please Login.'),
-            backgroundColor: Colors.green,
-          ),
+        _showFlushbar(
+          'Registration is Successful ! Please Login.',
+          Colors.green,
         );
         Future.delayed(const Duration(seconds: 2), () {
           Navigator.pushReplacement(
@@ -128,7 +124,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }
     } catch (e) {
       if (mounted) {
-        dialogueBuilder(context, e.toString());
+        _showFlushbar(
+          'Registration Failed ! Try Again with Proper Inputs.',
+          Colors.redAccent,
+        );
       }
     } finally {
       if (mounted) {
@@ -153,6 +152,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     bioTEC.clear();
     passwordTEC.clear();
     confirmPasswordTEC.clear();
+  }
+  void _showFlushbar(String message, Color color) {
+    Flushbar(
+      message: message,
+      duration: const Duration(seconds: 3),
+      backgroundColor: color,
+      margin: const EdgeInsets.all(8),
+      borderRadius: BorderRadius.circular(8),
+      flushbarPosition: FlushbarPosition.TOP,
+    )..show(context);
   }
 
   @override

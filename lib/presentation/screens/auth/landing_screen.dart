@@ -43,7 +43,6 @@ class LandingScreen extends StatelessWidget {
 
               SizedBox(height: ScreenUtil.defaultSize.height * .1.h),
 
-              // Sliding Button Animation from Bottom
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 0.h),
                 child: CustomButton(

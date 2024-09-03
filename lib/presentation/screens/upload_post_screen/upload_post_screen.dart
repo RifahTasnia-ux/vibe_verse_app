@@ -31,7 +31,7 @@ class _UploadScreenState extends State<UploadScreen> {
 
     if (selectedLocation != null && mounted) {
       setState(() {
-        _selectedLocation = selectedLocation; // Store the most recent selected location
+        _selectedLocation = selectedLocation;
       });
     }
   }
@@ -78,7 +78,7 @@ class _UploadScreenState extends State<UploadScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              _showPostDialog(); // Show the PostDialog
+              _showPostDialog();
             },
             child: Row(
               children: [
@@ -149,7 +149,7 @@ class _UploadScreenState extends State<UploadScreen> {
                             maxLines: null,
                             onChanged: (value) {
                               setState(() {
-                                _postMessage = value; // Update the post message
+                                _postMessage = value;
                               });
                             },
                           ),
