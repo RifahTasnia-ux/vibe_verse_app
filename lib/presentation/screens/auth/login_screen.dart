@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       if (mounted) {
         _showFlushbar(
-          'Log in Failed ! Try Again with Proper Inputs.',
+          'Log in Failed ! Try Again with All Proper Inputs.',
           Colors.redAccent,
         );
       }
