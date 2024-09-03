@@ -31,6 +31,7 @@ class StoryProfileCardWidget extends StatelessWidget {
           Expanded(
             child: Text(
               name,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 14,
                 fontFamily: "Satoshi-Black",

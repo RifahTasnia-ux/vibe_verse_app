@@ -132,8 +132,7 @@ class _PostListCardWidgetState extends State<PostListCardWidget> {
                   width: 24,
                 ),
                 const SizedBox(width: 8),
-                Expanded(
-                  child: Row(
+               Row(
                     children: [
                       SvgPicture.string(
                         SvgStringName.svgCommentIcon,
@@ -144,7 +143,6 @@ class _PostListCardWidgetState extends State<PostListCardWidget> {
                       Text("${widget.comments} comments", style: const TextStyle(fontFamily: "Satoshi-Medium",)),
                     ],
                   ),
-                ),
                 const SizedBox(
                   width: 25,
                 ),

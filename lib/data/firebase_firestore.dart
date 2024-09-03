@@ -63,6 +63,7 @@ class FirebaseFireStore {
         'profilePictureUrl': data['userProfile'] ?? 'https://via.placeholder.com/150',
         'fullName': data['fullName'] ?? '',
         'name': data['userName'] ?? '',
+        'email': data['userEmail'] ?? '',
         'postImageUrls': List<String>.from(data['imageUrls'] ?? []),
         'location': data['location'] ?? 'Unknown Location',
         'userId': data['userId'] ?? 'Unknown',  // Use the correct key 'userId'
@@ -81,6 +82,7 @@ class FirebaseFireStore {
     final userDoc = await _fireStore.collection('users').doc(auth.currentUser?.uid).get();
     return userDoc.data()?['userName'] ?? 'Anonymous';
   }
+
 
   Future<String> _fetchUserProfile() async {
     final userDoc = await _fireStore.collection('users').doc(auth.currentUser?.uid).get();

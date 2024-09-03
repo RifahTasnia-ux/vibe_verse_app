@@ -21,7 +21,6 @@ class ProfileListViewWidget extends StatelessWidget {
                 child: ProfileListViewCardWidget(
                   profilePictureUrl: post['profilePictureUrl'],
                   fullName: post['fullName'],
-                  email: post['email'],
                   postImageUrls: List<String>.from(post['postImageUrls']),
                   location: post['location'],
                   comments: post['comments'],
