@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../data/firebase_firestore.dart';
-import '../../../widget/profile_grid_list_widget.dart';
+import '../../../widget/profile_tab_view_widget.dart';
 import '../../../widget/profile_status_header_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -14,7 +14,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   List<Map<String, dynamic>> posts = [];
   Map<String, dynamic> userProfile = {};
-  List<Map<String, dynamic>> otherUsersProfiles = [];
   final RefreshController _refreshController = RefreshController(initialRefresh: false);
   final FirebaseFireStore _firebaseFireStore = FirebaseFireStore();
   bool _isLoading = true;
@@ -32,7 +31,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     _fetchData();
   }
-
   Future<void> _fetchData() async {
     setState(() {
       _isLoading = true;
@@ -40,8 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     try {
       await _getUserProfile();
-      await _fetchPosts();
-      await _fetchUserProfiles();
+      await _fetchPosts(); // _fetchPosts will now correctly update totalPost
     } catch (e) {
       print("Error fetching data: $e");
     } finally {
@@ -59,7 +56,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         fullName = userProfile['fullName'] ?? 'No Name';
         userHandle = '@${userProfile['userName']?.toLowerCase() ?? 'noUserName'}';
         profilePictureUrl = userProfile['profile'] ?? 'https://via.placeholder.com/150';
-        totalPost = posts.length.toString();
         following = userProfile['following']?.length.toString() ?? '0';
         follower = userProfile['followers']?.length.toString() ?? '0';
       });
@@ -71,26 +67,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _fetchPosts() async {
     try {
       final fetchedPosts = await _firebaseFireStore.fetchPosts();
+
+      final userId = userProfile['userId'];
+
+      final userPosts = fetchedPosts.where((post) {
+        final postUserId = post['userId'];
+        return postUserId != null && postUserId == userId;
+      }).toList();
+
       setState(() {
-        posts = fetchedPosts;
+        posts = userPosts;
+        totalPost = userPosts.length.toString();
+        print("Total User Posts: $totalPost");
       });
     } catch (e) {
       print("Error fetching posts: $e");
-    }
-  }
-
-  Future<void> _fetchUserProfiles() async {
-    try {
-      final allUserProfiles = await _firebaseFireStore.getAllUserProfiles();
-      final currentUserId = userProfile['userId'];
-
-      setState(() {
-        otherUsersProfiles = allUserProfiles
-            .where((profile) => profile['userId'] != currentUserId)
-            .toList();
-      });
-    } catch (e) {
-      print("Error fetching user profiles: $e");
     }
   }
 
@@ -127,11 +118,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               follower: follower,
             ),
             const SizedBox(height: 5),
-            ProfileGridListWidget(posts: posts),
+            ProfileTabViewWidget(posts: posts),
           ],
         ),
       ),
     );
   }
 }
-

@@ -3,16 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseFireStore {
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<bool> createUser({
     required String email,
-    required String userName,
     required String fullName,
+    required String userName,
     required String bio,
     required String profile,
   }) async {
-    await _fireStore.collection('users').doc(_auth.currentUser?.uid ?? '').set({
+    await _fireStore.collection('users').doc(auth.currentUser?.uid ?? '').set({
       'email': email,
       'fullName': fullName,
       'userName': userName,
@@ -30,7 +30,8 @@ class FirebaseFireStore {
     required String location,
     required List<String> imageUrls,
   }) async {
-    final userId = _auth.currentUser?.uid;
+    final userId = auth.currentUser?.uid;
+    final fullName = await _fetchFullName();
     final userName = await _fetchUserName();
     final userEmail = await _fetchUserEmail();
     final userProfile = await _fetchUserProfile();
@@ -38,6 +39,7 @@ class FirebaseFireStore {
     if (userId != null) {
       await _fireStore.collection('posts').add({
         'userId': userId,
+        'fullName': fullName,
         'userName': userName,
         'userEmail': userEmail,
         'userProfile': userProfile,
@@ -61,33 +63,40 @@ class FirebaseFireStore {
       final data = doc.data();
       return {
         'profilePictureUrl': data['userProfile'] ?? 'https://via.placeholder.com/150',
+        'fullName': data['fullName'] ?? '',
         'name': data['userName'] ?? '',
         'email': data['userEmail'] ?? '',
         'postImageUrls': List<String>.from(data['imageUrls'] ?? []),
         'location': data['location'] ?? 'Unknown Location',
+        'userId': data['userId'] ?? 'Unknown',  // Use the correct key 'userId'
         'comments': 0,
         'caption': data['caption'] ?? 'No Caption',
       };
     }).toList();
   }
 
+  Future<String> _fetchFullName() async {
+    final userDoc = await _fireStore.collection('users').doc(auth.currentUser?.uid).get();
+    return userDoc.data()?['fullName'] ?? 'Anonymous';
+  }
+
   Future<String> _fetchUserName() async {
-    final userDoc = await _fireStore.collection('users').doc(_auth.currentUser?.uid).get();
+    final userDoc = await _fireStore.collection('users').doc(auth.currentUser?.uid).get();
     return userDoc.data()?['userName'] ?? 'Anonymous';
   }
 
   Future<String> _fetchUserEmail() async {
-    final userDoc = await _fireStore.collection('users').doc(_auth.currentUser?.uid).get();
+    final userDoc = await _fireStore.collection('users').doc(auth.currentUser?.uid).get();
     return userDoc.data()?['email'] ?? 'No Email';
   }
   Future<String> _fetchUserProfile() async {
-    final userDoc = await _fireStore.collection('users').doc(_auth.currentUser?.uid).get();
+    final userDoc = await _fireStore.collection('users').doc(auth.currentUser?.uid).get();
     return userDoc.data()?['profile'] ?? 'https://via.placeholder.com/150';
   }
 
   Future<Map<String, dynamic>> getUserProfile() async {
     try {
-      final userId = _auth.currentUser?.uid;
+      final userId = auth.currentUser?.uid;
       if (userId == null) {
         throw Exception('User not logged in');
       }
@@ -111,6 +120,7 @@ class FirebaseFireStore {
         final data = doc.data();
         return {
           'userId': doc.id,
+          'fullName': data['fullName'] ?? 'Anonymous',
           'userName': data['userName'] ?? 'Anonymous',
           'profile': data['profile'] ?? 'https://via.placeholder.com/150',
         };
