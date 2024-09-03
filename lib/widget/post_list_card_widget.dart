@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../utils/svg_string.dart';
 
-class PostListCardWidget extends StatelessWidget {
+class PostListCardWidget extends StatefulWidget {
   final String profilePictureUrl;
   final String name;
-  final String email;
+  final String fullname;
   final List<String> postImageUrls;
   final String location;
   final int comments;
@@ -17,12 +18,25 @@ class PostListCardWidget extends StatelessWidget {
     super.key,
     required this.profilePictureUrl,
     required this.name,
-    required this.email,
+    required this.fullname,
     required this.postImageUrls,
     required this.location,
     required this.comments,
     required this.caption,
   });
+
+  @override
+  _PostListCardWidgetState createState() => _PostListCardWidgetState();
+}
+
+class _PostListCardWidgetState extends State<PostListCardWidget> {
+  final PageController _pageController = PageController();
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +55,7 @@ class PostListCardWidget extends StatelessWidget {
                     width: 40,
                     height: 40,
                     fit: BoxFit.cover,
-                    imageUrl: profilePictureUrl,
+                    imageUrl: widget.profilePictureUrl,
                     errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
@@ -51,7 +65,7 @@ class PostListCardWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        name,
+                        widget.fullname,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
@@ -59,7 +73,7 @@ class PostListCardWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        email,
+                        '@${widget.name}',
                         style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xff475467),
@@ -67,7 +81,7 @@ class PostListCardWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        location,
+                        widget.location,
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,
@@ -93,14 +107,14 @@ class PostListCardWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            // PageView for image slider
             SizedBox(
-              height: 250, // Adjust height as needed
+              height: 250,
               child: PageView.builder(
-                itemCount: postImageUrls.length,
+                controller: _pageController,
+                itemCount: widget.postImageUrls.length,
                 itemBuilder: (context, index) {
                   return CachedNetworkImage(
-                    imageUrl: postImageUrls[index],
+                    imageUrl: widget.postImageUrls[index],
                     fit: BoxFit.cover,
                     placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                     errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -127,10 +141,28 @@ class PostListCardWidget extends StatelessWidget {
                         width: 24,
                       ),
                       const SizedBox(width: 5),
-                      Text("$comments comments",style: const TextStyle(fontFamily: "Satoshi-Medium",),),
+                      Text("${widget.comments} comments", style: const TextStyle(fontFamily: "Satoshi-Medium",)),
                     ],
                   ),
                 ),
+                const SizedBox(
+                  width: 25,
+                ),
+                if (widget.postImageUrls.length > 1) ...[
+                  SmoothPageIndicator(
+                    controller: _pageController,
+                    count: widget.postImageUrls.length,
+                    effect: const WormEffect(
+                      dotWidth: 8.0,
+                      dotHeight: 8.0,
+                      spacing: 4.0,
+                      radius: 8.0,
+                      dotColor: Colors.grey,
+                      activeDotColor: Colors.blue,
+                    ),
+                  ),
+                ],
+                const Expanded(child: SizedBox()),
                 SvgPicture.string(
                   SvgStringName.svgSavedIcon,
                   height: 24,
@@ -142,8 +174,8 @@ class PostListCardWidget extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                caption,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400,fontFamily: "Satoshi-Medium",),
+                widget.caption,
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, fontFamily: "Satoshi-Medium",),
               ),
             ),
           ],

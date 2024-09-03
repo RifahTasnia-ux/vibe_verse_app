@@ -15,7 +15,7 @@ class PostListView extends StatelessWidget {
           return PostListCardWidget(
             profilePictureUrl: post['profilePictureUrl'],
             name: post['name'],
-            email: post['email'],
+            fullname: post['fullName'],
             postImageUrls: List<String>.from(post['postImageUrls']),
             location: post['location'],
             comments: post['comments'],

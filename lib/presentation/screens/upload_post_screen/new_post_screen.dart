@@ -147,7 +147,6 @@ class NewPostScreenState extends State<NewPostScreen> {
       ),
       body: Column(
         children: [
-          // Selected Image Preview
           if (_pickedImage != null) ...[
             Stack(
               children: [
@@ -161,8 +160,6 @@ class NewPostScreenState extends State<NewPostScreen> {
               ],
             ),
           ],
-
-          // Dropdown and Grid
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
