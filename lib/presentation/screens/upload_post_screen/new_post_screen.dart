@@ -117,7 +117,7 @@ class NewPostScreenState extends State<NewPostScreen> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
-            fontFamily: "Satoshi",
+            fontFamily: "Satoshi-Medium",
           ),
         ),
         actions: [
@@ -133,7 +133,7 @@ class NewPostScreenState extends State<NewPostScreen> {
                     color: Colors.blue,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    fontFamily: "Satoshi",
+                    fontFamily: "Satoshi-Medium",
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -181,7 +181,7 @@ class NewPostScreenState extends State<NewPostScreen> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
-                                  fontFamily: "Satoshi",
+                                  fontFamily: "Satoshi-Medium",
                                 ),
                               ),
                             ),
@@ -229,7 +229,7 @@ class NewPostScreenState extends State<NewPostScreen> {
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
-                              fontFamily: "Satoshi",
+                              fontFamily: "Satoshi-Medium",
                             ),
                           ),
                         ],

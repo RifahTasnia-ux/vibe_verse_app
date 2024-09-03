@@ -130,9 +130,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           Colors.green,
         );
         Future.delayed(const Duration(seconds: 2), () {
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const LoginScreen()),
+                (route) => false,
           );
           clearController();
         });
@@ -159,7 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Choose Image Source',style: TextStyle(
-            fontFamily: "Satoshi",
+            fontFamily: "Satoshi-Medium", fontWeight: FontWeight.w600,
           ),),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -170,6 +171,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Column(
                     children: [
                       IconButton(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         icon: SvgPicture.string(
                           SvgStringName.svgCamera,
                         ),
@@ -187,6 +190,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Column(
                     children: [
                       IconButton(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         icon: SvgPicture.string(
                           SvgStringName.svgGallery,
                         ),
@@ -204,13 +209,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.of(context).pop();
                 },
                 child: const Text(
                   'Cancel',
                   style: TextStyle(
                     color: Colors.red,
-                    fontFamily: "Satoshi",
+                    fontFamily: "Satoshi-Medium",
+                    fontWeight: FontWeight.w600, fontSize: 16,
                   ),
                 ),
               ),

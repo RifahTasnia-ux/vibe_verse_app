@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../utils/svg_string.dart';
 import '../../../widget/alertdialogbox.dart';
+import '../home_bottom_nav_bar.dart';
 import 'location_search_screen.dart';
-
 
 class UploadScreen extends StatefulWidget {
   final List<File> selectedImages;
@@ -50,7 +50,23 @@ class _UploadScreenState extends State<UploadScreen> {
         selectedLocation: _selectedLocation,
         postMessage: _postMessage,
       ),
-    );
+    ).then((success) {
+      if (mounted) {
+        if (success == true) {
+          Future.delayed(const Duration(seconds: 3), () {
+            if (mounted) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PersistentBottomNavBar(),
+                ),
+                    (route) => false,
+              );
+            }
+          });
+        }
+      }
+    });
   }
 
   @override
@@ -72,12 +88,13 @@ class _UploadScreenState extends State<UploadScreen> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
-            fontFamily: "Satoshi",
+            fontFamily: "Satoshi-Medium",
           ),
         ),
         actions: [
           TextButton(
             onPressed: () {
+              FocusScope.of(context).unfocus();
               _showPostDialog();
             },
             child: Row(
@@ -88,7 +105,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     color: Colors.blue,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    fontFamily: "Satoshi",
+                    fontFamily: "Satoshi-Medium",
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -142,7 +159,7 @@ class _UploadScreenState extends State<UploadScreen> {
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
-                                fontFamily: "Satoshi",
+                                fontFamily: "Satoshi-Medium",
                               ),
                               border: InputBorder.none,
                             ),
@@ -183,7 +200,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    fontFamily: "Satoshi",
+                    fontFamily: "Satoshi-Medium",
                   ),
                 ),
               ),
@@ -208,7 +225,7 @@ class _UploadScreenState extends State<UploadScreen> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        fontFamily: "Satoshi",
+                        fontFamily: "Satoshi-Medium",
                       ),
                     ),
                   );

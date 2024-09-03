@@ -76,11 +76,11 @@ class _LoginScreenState extends State<LoginScreen> {
           Colors.green,
         );
         Future.delayed(const Duration(seconds: 2), () {
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const PersistentBottomNavBar()),
-          );
-        });
+                (route) => false,
+          ); });
         emailTEC.clear();
         passwordTEC.clear();
       }

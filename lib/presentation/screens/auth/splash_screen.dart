@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const PersistentBottomNavBar()),
-              (route) => false, // Remove all routes
+              (route) => false,
         );
       }
     } else {
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const LandingScreen()),
-              (route) => false, // Remove all routes
+              (route) => false,
         );
       }
     }
