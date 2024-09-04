@@ -94,6 +94,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _handleSignUp() async {
+    if (passwordTEC.text.length < 6) {
+      _showFlushbar(
+        'Password must be at least 6 characters long !',
+        Colors.redAccent,
+      );
+      return;
+    }
+    if (passwordTEC.text != confirmPasswordTEC.text) {
+      _showFlushbar(
+        'The Password and Confirmed Password should be same !',
+        Colors.redAccent,
+      );
+      return;
+    }
+
     setState(() {
       _isLoading = true;
     });
@@ -115,9 +130,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           Colors.green,
         );
         Future.delayed(const Duration(seconds: 2), () {
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const LoginScreen()),
+                (route) => false,
           );
           clearController();
         });
@@ -125,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } catch (e) {
       if (mounted) {
         _showFlushbar(
-          'Registration Failed ! Try Again with Proper Inputs.',
+          'Registration Failed ! Try Again with All Proper Inputs.',
           Colors.redAccent,
         );
       }
@@ -139,10 +155,76 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _pickImage() async {
-    File? pickedImageFile = (await ImagePickerService().uploadImage('gallery'));
-    setState(() {
-      _imageFile = pickedImageFile;
-    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Choose Image Source',style: TextStyle(
+            fontFamily: "Satoshi-Medium", fontWeight: FontWeight.w600,
+          ),),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Column(
+                    children: [
+                      IconButton(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        icon: SvgPicture.string(
+                          SvgStringName.svgCamera,
+                        ),
+                        onPressed: () async {
+                          File? pickedImageFile = (await ImagePickerService().uploadImage('camera'));
+                          setState(() {
+                            _imageFile = pickedImageFile;
+                          });
+                          Navigator.of(context).pop();
+                        },
+                      ),
+
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      IconButton(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        icon: SvgPicture.string(
+                          SvgStringName.svgGallery,
+                        ),
+                        onPressed: () async {
+                          File? pickedImageFile = (await ImagePickerService().uploadImage('gallery'));
+                          setState(() {
+                            _imageFile = pickedImageFile;
+                          });
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontFamily: "Satoshi-Medium",
+                    fontWeight: FontWeight.w600, fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void clearController() {
@@ -171,7 +253,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _isFullNameFilled &&
         _isBioFilled &&
         _isPasswordFilled &&
-        _isConfirmPasswordFilled;
+        _isConfirmPasswordFilled &&
+        _imageFile != null;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -192,7 +275,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     color: const Color(0xff363636),
                     fontWeight: FontWeight.w700,),
                 ),
-                SizedBox(height: 25.h),
+                SizedBox(height: 15.h),
                 const Text(
                   "Register with your profile information",
                   style: TextStyle(
@@ -200,7 +283,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontFamily: "Roboto-Bold",
                   ),
                 ),
-                SizedBox(height: 26.h),
+                SizedBox(height: 15.h),
                 InkWell(
                   onTap: _pickImage,
                   child: Center(
@@ -220,7 +303,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 25.h),
+                SizedBox(height: 15.h),
                 CustomTextField(
                   controller: emailTEC,
                   svgIcon: Padding(
@@ -235,7 +318,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   focusNode: emailFocus,
                   inputType: TextInputType.emailAddress,
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 10.h),
                 CustomTextField(
                   controller: fullNameTEC,
                   svgIcon: Padding(
@@ -250,7 +333,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   focusNode: fullNameFocus,
                   inputType: TextInputType.text,
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 10.h),
                 CustomTextField(
                   controller: userNameTEC,
                   svgIcon: Padding(
@@ -265,7 +348,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   focusNode: userNameFocus,
                   inputType: TextInputType.text,
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 10.h),
                 CustomTextField(
                   controller: bioTEC,
                   svgIcon: Padding(
@@ -280,7 +363,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   focusNode: bioFocus,
                   inputType: TextInputType.text,
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 10.h),
                 CustomTextField(
                   controller: passwordTEC,
                   svgIcon: Padding(
@@ -296,7 +379,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   isPassword: true,
                   inputType: TextInputType.visiblePassword,
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 10.h),
                 CustomTextField(
                   controller: confirmPasswordTEC,
                   svgIcon: Padding(
@@ -312,7 +395,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   isPassword: true,
                   inputType: TextInputType.visiblePassword,
                 ),
-                SizedBox(height: 32.h),
+                SizedBox(height: 25.h),
                 CustomButton(
                   text: 'Create Account',
                   onPressed: () {
@@ -354,7 +437,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30.h),
+                SizedBox(height: 15.h),
               ],
             ),
           ),

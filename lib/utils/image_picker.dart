@@ -13,7 +13,6 @@ class ImagePickerService {
       if (pickedImage != null) {
         return File(pickedImage.path);
       } else {
-        // User canceled the picker
         return null;
       }
     } catch (e) {

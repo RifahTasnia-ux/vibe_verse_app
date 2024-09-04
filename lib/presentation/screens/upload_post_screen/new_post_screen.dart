@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:vibe_verse/presentation/screens/upload_post_screen/upload_post_screen.dart';
@@ -57,10 +58,9 @@ class NewPostScreenState extends State<NewPostScreen> {
           if (selectedIndices.length < maxSelection) {
             selectedIndices.add(index);
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('You can only select up to 4 images.'),
-              ),
+            _showFlushbar(
+              'You can only select up to 4 images !',
+              Colors.blueAccent,
             );
           }
         }
@@ -87,6 +87,16 @@ class NewPostScreenState extends State<NewPostScreen> {
       ),
     );
   }
+  void _showFlushbar(String message, Color color) {
+    Flushbar(
+      message: message,
+      duration: const Duration(seconds: 3),
+      backgroundColor: color,
+      margin: const EdgeInsets.all(8),
+      borderRadius: BorderRadius.circular(8),
+      flushbarPosition: FlushbarPosition.TOP,
+    )..show(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +117,7 @@ class NewPostScreenState extends State<NewPostScreen> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
-            fontFamily: "Satoshi",
+            fontFamily: "Satoshi-Medium",
           ),
         ),
         actions: [
@@ -123,7 +133,7 @@ class NewPostScreenState extends State<NewPostScreen> {
                     color: Colors.blue,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    fontFamily: "Satoshi",
+                    fontFamily: "Satoshi-Medium",
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -137,7 +147,6 @@ class NewPostScreenState extends State<NewPostScreen> {
       ),
       body: Column(
         children: [
-          // Selected Image Preview
           if (_pickedImage != null) ...[
             Stack(
               children: [
@@ -151,8 +160,6 @@ class NewPostScreenState extends State<NewPostScreen> {
               ],
             ),
           ],
-
-          // Dropdown and Grid
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
@@ -171,7 +178,7 @@ class NewPostScreenState extends State<NewPostScreen> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
-                                  fontFamily: "Satoshi",
+                                  fontFamily: "Satoshi-Medium",
                                 ),
                               ),
                             ),
@@ -219,7 +226,7 @@ class NewPostScreenState extends State<NewPostScreen> {
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
-                              fontFamily: "Satoshi",
+                              fontFamily: "Satoshi-Medium",
                             ),
                           ),
                         ],
@@ -270,14 +277,28 @@ class NewPostScreenState extends State<NewPostScreen> {
               },
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+            child: Text(
+              "Select More Images to Post",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                fontFamily: "Satoshi-Medium",
+                color: Colors.blueAccent,
+              ),
+            ),
+          ),
+
           ElevatedButton(
             onPressed: () => _pickImage('camera'),
-            child: const Text('Pick Image from Camera'),
+            child: const Text('Pick Image from Camera',style: TextStyle(color: Colors.purple),),
           ),
           ElevatedButton(
             onPressed: () => _pickImage('gallery'),
-            child: const Text('Pick Image from Gallery'),
+            child: const Text('Pick Image from Gallery',style: TextStyle(color: Colors.purple),),
           ),
+          const SizedBox(height: 8.0),
         ],
       ),
     );

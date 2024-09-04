@@ -24,7 +24,7 @@ class HomeStoryWidget extends StatelessWidget {
             AddStoryCardWidget(imageUrl: profileImageUrl),
             ...otherUsersProfiles.map((profile) {
               return StoryProfileCardWidget(
-                name: profile['userName'] ?? 'Unknown',
+                name: profile['fullName'] ?? 'Unknown',
                 profileDpPath: profileImageUrl,
                 storyImagePath: profile['profile'] ?? 'https://via.placeholder.com/150',
               );

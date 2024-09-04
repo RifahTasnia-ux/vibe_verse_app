@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -74,18 +76,18 @@ class _LoginScreenState extends State<LoginScreen> {
           Colors.green,
         );
         Future.delayed(const Duration(seconds: 2), () {
-          Navigator.pushReplacement(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const PersistentBottomNavBar()),
-          );
-        });
+                (route) => false,
+          ); });
         emailTEC.clear();
         passwordTEC.clear();
       }
     } catch (e) {
       if (mounted) {
         _showFlushbar(
-          'Log in Failed ! Try Again with Proper Inputs.',
+          'Log in Failed ! Try Again with All Proper Inputs.',
           Colors.redAccent,
         );
       }
@@ -185,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 controlAffinity: ListTileControlAffinity
                     .leading,
                 contentPadding: EdgeInsets.zero,
-                activeColor: _isChecked ? const Color(0xff779aef) : Colors.grey[700], // Change color based on the state
+                activeColor: _isChecked ? const Color(0xff779aef) : Colors.grey[700],
                 checkColor: Colors.white,
               ),
               SizedBox(height: 15.h),
@@ -197,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: AppColors.textBoxButton,
                 loadingColor: AppColors.secondary,
               ),
-              const Spacer(),
+              SizedBox(height: 50.h),
               Center(
                 child: RichText(
                   text: TextSpan(
@@ -222,6 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 30.h),
             ],
           ),
         ),

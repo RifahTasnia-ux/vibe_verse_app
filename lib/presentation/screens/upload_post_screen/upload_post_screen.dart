@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../utils/svg_string.dart';
 import '../../../widget/alertdialogbox.dart';
+import '../home_bottom_nav_bar.dart';
 import 'location_search_screen.dart';
-
 
 class UploadScreen extends StatefulWidget {
   final List<File> selectedImages;
@@ -18,6 +18,7 @@ class UploadScreen extends StatefulWidget {
 class _UploadScreenState extends State<UploadScreen> {
   String? _selectedLocation;
   String _postMessage = '';
+  int _currentPage = 0;
 
   void _selectLocation() async {
     final selectedLocation = await Navigator.of(context).push<String>(
@@ -50,6 +51,39 @@ class _UploadScreenState extends State<UploadScreen> {
         selectedLocation: _selectedLocation,
         postMessage: _postMessage,
       ),
+    ).then((success) {
+      if (mounted) {
+        if (success == true) {
+          Future.delayed(const Duration(seconds: 3), () {
+            if (mounted) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PersistentBottomNavBar(),
+                ),
+                    (route) => false,
+              );
+            }
+          });
+        }
+      }
+    });
+  }
+  Widget _buildPageIndicator() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: List.generate(
+        widget.selectedImages.length,
+            (index) => Container(
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(
+            color: _currentPage == index ? Colors.blue : Colors.grey,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ),
     );
   }
 
@@ -72,12 +106,13 @@ class _UploadScreenState extends State<UploadScreen> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
-            fontFamily: "Satoshi",
+            fontFamily: "Satoshi-Medium",
           ),
         ),
         actions: [
           TextButton(
             onPressed: () {
+              FocusScope.of(context).unfocus();
               _showPostDialog();
             },
             child: Row(
@@ -88,7 +123,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     color: Colors.blue,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    fontFamily: "Satoshi",
+                    fontFamily: "Satoshi-Medium",
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -114,6 +149,11 @@ class _UploadScreenState extends State<UploadScreen> {
                     width: 150,
                     child: PageView.builder(
                       itemCount: widget.selectedImages.length,
+                      onPageChanged: (page) {
+                        setState(() {
+                          _currentPage = page;
+                        });
+                      },
                       itemBuilder: (context, index) {
                         return Container(
                           margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -142,7 +182,7 @@ class _UploadScreenState extends State<UploadScreen> {
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16,
-                                fontFamily: "Satoshi",
+                                fontFamily: "Satoshi-Medium",
                               ),
                               border: InputBorder.none,
                             ),
@@ -159,7 +199,14 @@ class _UploadScreenState extends State<UploadScreen> {
                   ),
                 ],
               ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(width: 45),
+                _buildPageIndicator(),
+              ],
+            ),
             const Divider(),
             if (_selectedLocation != null) ...[
               ListTile(
@@ -183,36 +230,44 @@ class _UploadScreenState extends State<UploadScreen> {
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    fontFamily: "Satoshi",
+                    fontFamily: "Satoshi-Medium",
                   ),
                 ),
               ),
               const SizedBox(height: 5),
               const Divider(),
-              Wrap(
-                spacing: 8,
-                children: List.generate(3, (index) {
-                  return TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.grey.shade300,
-                      foregroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    child: const Text(
-                      'Multiple Select',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "Satoshi",
-                      ),
-                    ),
-                  );
-                }),
+              SizedBox(
+                height: 50,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(4, (index) {
+                      return Container(
+                        margin: const EdgeInsets.only(right: 8),
+                        child: TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.grey.shade300,
+                            foregroundColor: Colors.black,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                          child: const Text(
+                            'Multiple Select',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Satoshi-Medium",
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
               ),
             ],
             const Divider(),

@@ -33,7 +33,6 @@ class FirebaseFireStore {
     final userId = auth.currentUser?.uid;
     final fullName = await _fetchFullName();
     final userName = await _fetchUserName();
-    final userEmail = await _fetchUserEmail();
     final userProfile = await _fetchUserProfile();
 
     if (userId != null) {
@@ -41,7 +40,6 @@ class FirebaseFireStore {
         'userId': userId,
         'fullName': fullName,
         'userName': userName,
-        'userEmail': userEmail,
         'userProfile': userProfile,
         'caption': caption,
         'location': location,
@@ -85,10 +83,7 @@ class FirebaseFireStore {
     return userDoc.data()?['userName'] ?? 'Anonymous';
   }
 
-  Future<String> _fetchUserEmail() async {
-    final userDoc = await _fireStore.collection('users').doc(auth.currentUser?.uid).get();
-    return userDoc.data()?['email'] ?? 'No Email';
-  }
+
   Future<String> _fetchUserProfile() async {
     final userDoc = await _fireStore.collection('users').doc(auth.currentUser?.uid).get();
     return userDoc.data()?['profile'] ?? 'https://via.placeholder.com/150';

@@ -23,6 +23,7 @@ class PostDialog extends StatefulWidget {
 class PostDialogState extends State<PostDialog> {
   bool _isLoading = false;
 
+
   Future<void> _uploadPost() async {
     setState(() {
       _isLoading = true;
@@ -45,23 +46,32 @@ class PostDialogState extends State<PostDialog> {
         location: widget.selectedLocation ?? '',
         imageUrls: imageUrls,
       );
-      Navigator.of(context).pop();
-      _showFlushbar(
-        'Post shared successfully !',
-        Colors.green,
-      );
+
+      if (mounted) {
+        Navigator.of(context).pop(true);
+        _showFlushbar(
+          'Post shared successfully !',
+          Colors.green,
+        );
+      }
+
     } catch (error) {
-      Navigator.of(context).pop();
-      _showFlushbar(
-        'Failed to post! Please Try Again with Proper Inputs.',
-        Colors.redAccent,
-      );
+      if (mounted) {
+        Navigator.of(context).pop(false);
+        _showFlushbar(
+          'Failed to post! Please Try Again with Proper Inputs.',
+          Colors.redAccent,
+        );
+      }
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
+
   void _showFlushbar(String message, Color color) {
     Flushbar(
       message: message,
@@ -70,7 +80,7 @@ class PostDialogState extends State<PostDialog> {
       margin: const EdgeInsets.all(8),
       borderRadius: BorderRadius.circular(8),
       flushbarPosition: FlushbarPosition.TOP,
-    )..show(context);
+    ).show(context);
   }
 
   @override
@@ -98,14 +108,14 @@ class PostDialogState extends State<PostDialog> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    fontFamily: "Satoshi",
+                    fontFamily: "Satoshi-Medium",
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
                 const Text(
                   'Your post will share by clicking yes, if need any change click on edit.',
-                  style: TextStyle(fontSize: 14,fontFamily: "Satoshi",),
+                  style: TextStyle(fontSize: 14,fontFamily: "Satoshi-Medium",),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
@@ -114,11 +124,11 @@ class PostDialogState extends State<PostDialog> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop(false);
                       },
                       child: const Text(
                         'Edit',
-                        style: TextStyle(color: Colors.blue,fontFamily: "Satoshi",),
+                        style: TextStyle(color: Colors.blue,fontFamily: "Satoshi-Medium",),
                       ),
                     ),
                     ElevatedButton(
@@ -131,7 +141,7 @@ class PostDialogState extends State<PostDialog> {
                       ),
                       child: const Text(
                         'Post Now',
-                        style: TextStyle(color: Colors.white,fontFamily: "Satoshi",),
+                        style: TextStyle(color: Colors.white,fontFamily: "Satoshi-Medium",),
                       ),
                     ),
                   ],

@@ -8,7 +8,6 @@ import '../utils/svg_string.dart';
 class ProfileListViewCardWidget extends StatefulWidget {
   final String profilePictureUrl;
   final String fullName;
-  final String email;
   final List<String> postImageUrls;
   final String location;
   final int comments;
@@ -18,7 +17,6 @@ class ProfileListViewCardWidget extends StatefulWidget {
     super.key,
     required this.profilePictureUrl,
     required this.fullName,
-    required this.email,
     required this.postImageUrls,
     required this.location,
     required this.comments,

@@ -50,6 +50,8 @@ class PhotoPickerDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   icon: SvgPicture.string(
                     SvgStringName.svgCamera,
                   ),
@@ -67,6 +69,8 @@ class PhotoPickerDialog extends StatelessWidget {
                   },
                 ),
                 IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   icon: SvgPicture.string(
                     SvgStringName.svgGallery,
                   ),
@@ -93,7 +97,9 @@ class PhotoPickerDialog extends StatelessWidget {
                 'Cancel',
                 style: TextStyle(
                   color: Colors.red,
-                  fontFamily: "Satoshi",
+                  fontFamily: "Satoshi-Medium",
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
                 ),
               ),
             ),

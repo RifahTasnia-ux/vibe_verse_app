@@ -48,7 +48,7 @@ class AddStoryCardWidget extends StatelessWidget {
                   "Create story",
                   style: TextStyle(
                     fontSize: 14,
-                    fontFamily: "Satoshi",
+                    fontFamily: "Satoshi-Medium",
                   ),
                   textAlign: TextAlign.center,
                 ),
